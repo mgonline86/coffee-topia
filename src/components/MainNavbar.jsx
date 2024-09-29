@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function MainNavbar() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary shadow" sticky="top">
       <Container>
         <Navbar.Brand as={Link} to={"/"}><img className="rounded" src="/logo.svg" alt="logo" width={80} height={80} /></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />

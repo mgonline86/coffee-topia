@@ -1,15 +1,15 @@
 [
     {
-        "slug":"daniels-blend-decaffeinato-nespresso-compatible-10-aluminum-capsules",
+        "id":"p-1",
         "title":"Daniel's Blend Decaffeinato - Nespresso Compatible - 10 Aluminum capsules",
         "description":"<p>Enjoy the rich, full taste of expertly roasted coffee without the caffeine, all encapsulated in eco-friendly aluminum.<\/p>\n<ul>\n<li>\n<strong>Taste Profile:<\/strong> Smooth and well-rounded with creamy notes of caramel and a soft, nutty finish.<\/li>\n<li>\n<strong>Compatibility:<\/strong> Compatible with Nespresso OriginalLine machines.<\/li>\n<li>\n<strong>No. Of Servings\/Pods:<\/strong> 10 capsules<\/li>\n<li>\n<strong>Weight (Per capsule):<\/strong> 5 grams<\/li>\n<li>\n<strong>Recommended Shot:<\/strong> Espresso<\/li>\n<li>\n<strong>Roast:<\/strong> Medium<\/li>\n<li>\n<strong>Intensity:<\/strong> 6<\/li>\n<li>\n<strong>Composition:<\/strong> Decaffeinated Arabica<\/li>\n<li>\n<strong>Ingredients:<\/strong> Decaffeinated ground Arabica coffee<\/li>\n<li>\n<strong>Nutrition Facts:<\/strong>\n<ul>\n<li>Serving Size: 1 capsule (5 grams)<\/li>\n<li>Calories: 2<\/li>\n<li>Total Fat: 0g<\/li>\n<li>Saturated Fat: 0g<\/li>\n<li>Trans Fat: 0g<\/li>\n<li>Cholesterol: 0mg<\/li>\n<li>Sodium: 0mg<\/li>\n<li>Total Carbohydrates: 0g<\/li>\n<li>Dietary Fiber: 0g<\/li>\n<li>Sugars: 0g<\/li>\n<li>Protein: 0g<\/li>\n<\/ul>\n<\/li>\n<\/ul>",
-        "brand":"Nespresso - Daniel's",
-        "tags":"Capsules, Coffee, Daniel's Blend, Nespresso Compatible, Nespresso Pods, Pods",
-        "sku":"NC491",
         "image":"https:\/\/cdn.shopify.com\/s\/files\/1\/0720\/3150\/2585\/files\/Daniel_sBlendNespressoDescafeinado-10capsules-12-138-168-8436553291145.jpg?v=1727557578",
         "price":220.0,
         "discount":0.205,
-        "id":"p-1"
+        "brand":"Nespresso - Daniel's",
+        "tags":"Capsules, Coffee, Daniel's Blend, Nespresso Compatible, Nespresso Pods, Pods",
+        "slug":"daniels-blend-decaffeinato-nespresso-compatible-10-aluminum-capsules",
+        "sku":"NC491"
     },
     {
         "slug":"chupa-chups-bubble-gum-filled-lollipop-sour-green",
