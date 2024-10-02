@@ -26,7 +26,7 @@ export default function HeroSection() {
     >
       {images.map((image) => (
         <Carousel.Item key={image} as={Link} to={"/products"}>
-          <img src={imagesPath + image + imgExt} alt={`Slide ${image}`} />
+          <img src={imagesPath + image + imgExt} alt={`Slide ${image}`} className="d-block w-100" />
         </Carousel.Item>
       ))}
     </Carousel>

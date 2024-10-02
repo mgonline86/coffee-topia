@@ -7,9 +7,17 @@ import { Link } from "react-router-dom";
 
 export default function MainNavbar() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary shadow" sticky="top">
+    <Navbar expand="lg" className="bg-white shadow" sticky="top">
       <Container>
-        <Navbar.Brand as={Link} to={"/"}><img className="rounded" src="/logo.svg" alt="logo" width={80} height={80} /></Navbar.Brand>
+        <Navbar.Brand as={Link} to={"/"}>
+          <img
+            className="rounded"
+            src="/logo.svg"
+            alt="logo"
+            width={75}
+            height={45}
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="ms-auto my-2 my-lg-0">
@@ -35,8 +43,12 @@ export default function MainNavbar() {
             />
           </Form>
           <div className="d-flex gap-2 mx-2">
-            <Button as={Link} to={"/login"} variant="secondary">Login</Button>
-            <Button as={Link} to={"/register"} variant="primary">Register</Button>
+            <Button as={Link} to={"/login"} variant="secondary">
+              Login
+            </Button>
+            <Button as={Link} to={"/register"} variant="primary">
+              Register
+            </Button>
           </div>
         </Navbar.Collapse>
       </Container>
