@@ -3,50 +3,12 @@ import products from "../data/products";
 
 const ProductContext = createContext();
 
-const comapre = (obj, key, operation, value) => {
-  try {
-    if (!obj[key]) return false;
-    switch (operation) {
-      case ">":
-        return obj[key] > value;
-      case ">=":
-        return obj[key] >= value;
-      case "<":
-        return obj[key] < value;
-      case "<=":
-        return obj[key] <= value;
-      case "=":
-        return obj[key] === value;
-      case "in":
-        return obj[key].includes(value);
-      case "like":
-        if (typeof obj[key] === "string") {
-          return obj[key].toLowerCase().includes(String(value).toLowerCase());
-        }
-        return false;
-      default:
-        return false;
-    }
-  } catch (error) {
-    return false;
-  }
-};
-
 export const ProductProvider = ({ children }) => {
+  // get unique values
   const brands = [...new Set(products.map((product) => product.brand))];
-
-  const getProducts = (from = 0, to = 20, filters = []) => {
-    if (filters.length > 0) {
-      return products
-        .filter((product) => {
-          return filters.every((filter) =>
-            comapre(product, filter.key, filter.operation, filter.value)
-          );
-        })
-        .slice(from, to);
-    }
-    return products.slice(from, to);
-  };
+  const tags = [...new Set(products.flatMap((product) => product.tags))];
+  const maxProductPrice = Math.max(...products.map((product) => product.price));
+  const minProductPrice = Math.min(...products.map((product) => product.price));
 
   const getProductBySlug = (slug) => {
     return products.find((product) => product.slug === slug);
@@ -55,7 +17,9 @@ export const ProductProvider = ({ children }) => {
   const value = {
     products,
     brands,
-    getProducts,
+    tags,
+    maxProductPrice,
+    minProductPrice,
     getProductBySlug,
   };
 
