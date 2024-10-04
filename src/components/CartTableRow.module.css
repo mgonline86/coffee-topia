@@ -1,0 +1,9 @@
+.oldPrice {
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 991px) {
+  .borderEndXsNone {
+    border-right: 0 !important;
+  }
+}
