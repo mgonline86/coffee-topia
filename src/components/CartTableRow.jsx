@@ -30,7 +30,7 @@ export default function CartTableRow({ item }) {
     if (discount && discount > 0) {
       return (
         <div className="d-flex flex-column align-items-end justify-content-end gap-1">
-          <span>EGP {(1 - discount) * price * qty}</span>
+          <span>EGP {((1 - discount) * price * qty).toFixed(2)}</span>
           <span
             className={`text-decoration-line-through text-muted ${styles.oldPrice}`}
           >
@@ -46,7 +46,7 @@ export default function CartTableRow({ item }) {
     if (discount && discount > 0) {
       return (
         <div className="d-flex flex-column align-items-end justify-content-end gap-1">
-          <span>EGP {(1 - discount) * price}</span>
+          <span>EGP {((1 - discount) * price).toFixed(2)}</span>
           <span
             className={`text-decoration-line-through text-muted ${styles.oldPrice}`}
           >

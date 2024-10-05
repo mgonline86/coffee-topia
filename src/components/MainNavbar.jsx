@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import useCartContext from "../contexts/cartContext";
+import { ShoppingCartIcon } from "lucide-react";
 
 export default function MainNavbar() {
   const { itemsCount } = useCartContext();
@@ -31,19 +32,25 @@ export default function MainNavbar() {
         </Form>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="flex-grow-0">
-          <Nav className="ms-auto my-2 my-lg-0">
+          <Nav className="ms-auto my-2 my-lg-0 align-items-center">
             <Nav.Link as={Link} to={"/"}>
               Home
             </Nav.Link>
             <Nav.Link as={Link} to={"/products"}>
               Products
             </Nav.Link>
-            <Nav.Link as={Link} to={"/cart"}>
-              Cart
-              <Badge bg="danger">{itemsCount}</Badge>
-            </Nav.Link>
             <Nav.Link as={Link} to={"/profile"}>
               Profile
+            </Nav.Link>
+            <Nav.Link as={Link} to={"/cart"} className="position-relative py-0 mx-3">
+              <ShoppingCartIcon />
+              <Badge
+                bg="danger"
+                pill
+                className="position-absolute top-0 start-100 translate-middle"
+              >
+                {itemsCount > 99 ? "99+" : itemsCount}
+              </Badge>
             </Nav.Link>
           </Nav>
 

@@ -1,4 +1,4 @@
-import { Col, Pagination, Row } from "react-bootstrap";
+import { Pagination } from "react-bootstrap";
 import useProductListContext from "../contexts/productListContext";
 
 export default function ProductListPagenation() {
@@ -9,27 +9,23 @@ export default function ProductListPagenation() {
     return null;
   }
   return (
-    <Row className="mt-4 position-sticky bottom-0">
-      <Col className="d-flex justify-content-center">
-        <Pagination className="shadow rounded border-primary border">
-          <Pagination.First
-            disabled={currentPage <= 1}
-            onClick={() => handlePageChange(1)}
-          />
-          <Pagination.Prev
-            disabled={currentPage <= 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-          />
-          <Pagination.Next
-            disabled={currentPage >= pagesCount}
-            onClick={() => handlePageChange(currentPage + 1)}
-          />
-          <Pagination.Last
-            disabled={currentPage >= pagesCount}
-            onClick={() => handlePageChange(pagesCount)}
-          />
-        </Pagination>
-      </Col>
-    </Row>
+    <Pagination className="shadow rounded border border-2 border-primary m-0">
+      <Pagination.First
+        disabled={currentPage <= 1}
+        onClick={() => handlePageChange(1)}
+      />
+      <Pagination.Prev
+        disabled={currentPage <= 1}
+        onClick={() => handlePageChange(currentPage - 1)}
+      />
+      <Pagination.Next
+        disabled={currentPage >= pagesCount}
+        onClick={() => handlePageChange(currentPage + 1)}
+      />
+      <Pagination.Last
+        disabled={currentPage >= pagesCount}
+        onClick={() => handlePageChange(pagesCount)}
+      />
+    </Pagination>
   );
 }

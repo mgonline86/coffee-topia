@@ -19,7 +19,7 @@ export default function ProductCard({ product }) {
           {(product.discount * 100).toFixed(1)}% OFF
         </Badge>
       )}
-      <Link to={`/products/${slug}`}>
+      <Link to={`/products/${slug}`} className="overflow-hidden">
         <Card.Img
           variant="top"
           src={image

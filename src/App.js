@@ -9,6 +9,7 @@ import ProductListPage from "./pages/ProductListPage";
 import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
+import CheckoutPage from "./components/CheckoutPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <MainNavbar />
           <Routes>
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />

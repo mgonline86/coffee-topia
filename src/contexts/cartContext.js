@@ -1,12 +1,22 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const CartContext = createContext();
 
+// Get cart from localStorage
+const initialCart = localStorage.getItem("cart")
+  ? JSON.parse(localStorage.getItem("cart"))
+  : {};
+
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState(initialCart);
   const [showCart, setShowCart] = useState(false);
   const handleCloseCart = () => setShowCart(false);
   const handleShowCart = () => setShowCart(true);
+
+  // Save cart to localStorage
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   const itemsCount = useMemo(
     () => Object.values(cart).reduce((acc, { qty }) => acc + qty, 0),
@@ -32,7 +42,6 @@ export const CartProvider = ({ children }) => {
     const strId = String(id);
     if (cart[strId]) {
       setCart((prev) => {
-        // remove cost key from object
         const { [strId]: _, ...rest } = prev;
         return rest;
       });
@@ -67,7 +76,7 @@ export const CartProvider = ({ children }) => {
         if (discount > 0) {
           return acc + (price - price * discount) * qty;
         }
-        return acc + (price * qty);
+        return acc + price * qty;
       },
       0
     );

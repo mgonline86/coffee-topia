@@ -9,7 +9,7 @@ import { ProductListProvider } from "../contexts/productListContext";
 export default function ProductListPageX() {
   return (
     <ProductListProvider>
-      <Container className="my-5">
+      <Container className="my-3 my-lg-4 my-xl-5">
         <CustomOffcanvas>
           <CustomOffcanvas.Trigger variant="outline-primary border-0 my-2 d-xl-none d-flex align-items-center justify-content-center gap-1">
             <FilterIcon /> Filter
@@ -43,7 +43,9 @@ export default function ProductListPageX() {
             <ProductListView />
           </Col>
         </Row>
-        <ProductListPagenation />
+        <div className="position-sticky bottom-0 start-50 translate-middle-x py-3" style={{ width: "fit-content" }}>
+          <ProductListPagenation />
+        </div>
       </Container>
     </ProductListProvider>
   );
