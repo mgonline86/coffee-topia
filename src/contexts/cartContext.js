@@ -65,9 +65,9 @@ export const CartProvider = ({ children }) => {
     const total = Object.values(cart).reduce(
       (acc, { qty, product: { price, discount } }) => {
         if (discount > 0) {
-          return acc + (price - price * (discount / 100)) * qty;
+          return acc + (price - price * discount) * qty;
         }
-        return acc + price * qty;
+        return acc + (price * qty);
       },
       0
     );
