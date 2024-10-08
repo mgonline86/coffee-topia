@@ -13,15 +13,15 @@
   background-color: var(--bs-blue) !important;
 }
 
+.heroCarousel div:first-of-type {
+  margin-bottom: 0;
+}
+
 @media screen and (max-width: 768px) {
   .heroCarousel span {
     width: 1.5rem;
     height: 1.5rem;
     background-size: 70%;
-  }
-
-  .heroCarousel div:first-of-type {
-    margin-bottom: 0.1rem;
   }
 
   .heroCarousel div:first-of-type button {

@@ -56,12 +56,6 @@ const Footer = () => {
         <p style={descriptionStyle}>
           Your daily dose of coffee perfection. Brewed with love!
         </p>
-        <div style={linksStyle}>
-          <a href="/about" style={linkStyle}>About Us</a>
-          <a href="/menu" style={linkStyle}>Menu</a>
-          <a href="/contact" style={linkStyle}>Contact</a>
-          <a href="/faq" style={linkStyle}>FAQ</a>
-        </div>
       </div>
       <div style={bottomStyle}>
         <p>&copy; {new Date().getFullYear()} Coffeetopia. All rights reserved.</p>

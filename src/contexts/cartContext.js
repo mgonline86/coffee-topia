@@ -23,17 +23,17 @@ export const CartProvider = ({ children }) => {
     [cart]
   );
 
-  const addToCart = (product) => {
+  const addToCart = (product, newQty=1) => {
     const strId = String(product.id);
     if (cart[strId]) {
       setCart((prev) => ({
         ...prev,
-        [strId]: { ...prev[strId], qty: prev[strId].qty + 1 },
+        [strId]: { ...prev[strId], qty: prev[strId].qty + newQty },
       }));
     } else {
       setCart((prev) => ({
         ...prev,
-        [strId]: { product, qty: 1, timestamp: Date.now() },
+        [strId]: { product, qty: newQty, timestamp: Date.now() },
       }));
     }
   };

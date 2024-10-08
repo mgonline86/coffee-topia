@@ -7,8 +7,11 @@ import Collection from "../sections/Collection";
 export default function HomePage() {
   return (
     <>
-      <HeroSection />;
+      <HeroSection />
+      <hr/>
       <FeaturedProducts />
+      <hr/>
+      
       <Collection />
       <Footer />
     </>
