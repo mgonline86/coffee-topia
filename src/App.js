@@ -10,12 +10,15 @@ import ProductPage from "./pages/ProductPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import CheckoutPage from "./components/CheckoutPage";
+import ScrollToTop from "./components/ScrollToTop";
+import Footer from "./sections/Footer";
 
 function App() {
   return (
     <CartProvider>
       <ProductProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <MainNavbar />
           <Routes>
             <Route path="/cart" element={<CartPage />} />
@@ -28,6 +31,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </ProductProvider>
     </CartProvider>

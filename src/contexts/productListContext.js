@@ -71,6 +71,7 @@ export const ProductListProvider = ({ children }) => {
   const handlePageChange = (page) => {
     page = parseInt(page);
     setCurrentPage(page);
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -92,7 +93,7 @@ export const ProductListProvider = ({ children }) => {
     }
     params.set("page", currentPage);
 
-    setSearchParams(params);
+    setSearchParams(params, { replace: true });
   }, [
     currentPage,
     selectedBrands,
