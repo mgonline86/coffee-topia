@@ -9,13 +9,21 @@ export const ProductListProvider = ({ children }) => {
     useContext(ProductContext);
   const productsPerPage = 24;
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageFromQuery = parseInt(searchParams.get("page")) || 1;
+  const brandsFromQuery = searchParams.get("brands")?.split(",").filter(Boolean) || [];
+  const tagsFromQuery = searchParams.get("tags")?.split(",").filter(Boolean) || [];
+  const searchTermFromQuery = searchParams.get("q") || "";
+  const minPriceFromQuery = parseInt(searchParams.get("minPrice"));
+  const maxPriceFromQuery = parseInt(searchParams.get("maxPrice"));
+  const [currentPage, setCurrentPage] = useState(pageFromQuery);
+  const [searchTerm, setSearchTerm] = useState(searchTermFromQuery);
   const [priceRange, setPriceRange] = useState([
-    minProductPrice,
-    maxProductPrice,
+    minPriceFromQuery || minProductPrice,
+    maxPriceFromQuery || maxProductPrice,
   ]);
-  const [selectedBrands, setSelectedBrands] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState(brandsFromQuery);
+  const [selectedTags, setSelectedTags] = useState(tagsFromQuery);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -60,18 +68,41 @@ export const ProductListProvider = ({ children }) => {
     setCurrentPage(1);
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageFromQuery = parseInt(searchParams.get("page")) || 1;
-  const [currentPage, setCurrentPage] = useState(pageFromQuery);
-
   const handlePageChange = (page) => {
     page = parseInt(page);
     setCurrentPage(page);
   };
 
   useEffect(() => {
-    setSearchParams({ page: currentPage });
-  }, [currentPage, setSearchParams]);
+    const params = new URLSearchParams();
+    if (searchTerm) {
+      params.set("q", searchTerm);
+    }
+    if (priceRange[0] !== minProductPrice) {
+      params.set("minPrice", priceRange[0]);
+    }
+    if (priceRange[1] !== maxProductPrice) {
+      params.set("maxPrice", priceRange[1]);
+    }
+    if (selectedBrands.length > 0) {
+      params.set("brands", selectedBrands.join(","));
+    }
+    if (selectedTags.length > 0) {
+      params.set("tags", selectedTags.join(","));
+    }
+    params.set("page", currentPage);
+
+    setSearchParams(params);
+  }, [
+    currentPage,
+    selectedBrands,
+    selectedTags,
+    searchTerm,
+    priceRange,
+    minProductPrice,
+    maxProductPrice,
+    setSearchParams,
+  ]);
 
   const [pagesCount, setPagesCount] = useState(
     Math.ceil(products.length / productsPerPage)

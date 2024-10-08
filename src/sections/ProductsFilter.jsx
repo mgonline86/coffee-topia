@@ -9,6 +9,8 @@ export default function ProductsFilter() {
     handlePriceMinChange,
     handleSelectBrand,
     handleSelectTag,
+    selectedBrands,
+    selectedTags,
     searchTerm,
     priceRange,
     brands,
@@ -71,6 +73,10 @@ export default function ProductsFilter() {
               value: brand,
               label: brand,
             }))}
+            value={selectedBrands.map((brand) => ({
+              value: brand,
+              label: brand,
+            }))}
           />
         </Form.Group>
         <hr className="text-muted" />
@@ -79,6 +85,10 @@ export default function ProductsFilter() {
           <Select
             onChange={handleSelectTag}
             isMulti
+            value={selectedTags.map((tag) => ({
+              value: tag,
+              label: tag,
+            }))}
             options={tags.map((tag) => ({
               value: tag,
               label: tag,
