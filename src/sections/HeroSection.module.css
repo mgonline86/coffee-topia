@@ -1,0 +1,30 @@
+.heroCarousel span {
+  background-color: var(--bs-blue);
+  border-radius: 50%;
+
+  width: 3rem;
+  height: 3rem;
+  background-size: 90%;
+}
+
+
+ /* div:first-of-type -> targets ".carousel-indicators" */
+.heroCarousel div:first-of-type button {
+  background-color: var(--bs-blue) !important;
+}
+
+.heroCarousel div:first-of-type {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .heroCarousel span {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: 70%;
+  }
+
+  .heroCarousel div:first-of-type button {
+    width: 15px;
+  }
+}
