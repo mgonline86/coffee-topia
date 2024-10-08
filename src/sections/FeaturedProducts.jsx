@@ -1,14 +1,21 @@
 import products from "../data/featuredProducts.json";
-export default function FeaturedProducts() {
+import ProductCard from "../components/ProductCard";
+import { Col, Container, Row } from "react-bootstrap";
+
+const FeaturedProducts = () => {
+
   return (
-    <div>
-      {products.map((product) => {
-        return (
-          <div key={product.slug}>
-            <h1>{product.title}</h1>
-          </div>
-        );
-      })}
-    </div>
+    <Container>
+      <h2 className="text-center">Featured Products</h2>
+      <Row>
+        {products.map((product) => (
+          <Col key={product.title} className="gap-2">
+            <ProductCard product={product} />
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
-}
+};
+
+export default FeaturedProducts;
