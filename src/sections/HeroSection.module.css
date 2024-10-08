@@ -24,7 +24,7 @@
     background-size: 70%;
   }
 
-  .heroCarousel div:first-of-type button {
-    width: 15px;
+  .heroCarousel div:first-of-type {
+    display: none;
   }
 }
