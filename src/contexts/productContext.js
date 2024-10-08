@@ -1,23 +1,25 @@
-import { createContext, useState } from "react";
-import productsData from "../data/products";
+import { createContext } from "react";
+import products from "../data/products";
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState(productsData);
-
-  const getProducts = (from = 0, to = 20) => {
-    return products.slice(from, to);
-  };
+  // get unique values
+  const brands = [...new Set(products.map((product) => product.brand))];
+  const tags = [...new Set(products.flatMap((product) => product.tags))];
+  const maxProductPrice = Math.max(...products.map((product) => product.price));
+  const minProductPrice = Math.min(...products.map((product) => product.price));
 
   const getProductBySlug = (slug) => {
     return products.find((product) => product.slug === slug);
   };
 
   const value = {
-    setProducts,
     products,
-    getProducts,
+    brands,
+    tags,
+    maxProductPrice,
+    minProductPrice,
     getProductBySlug,
   };
 
