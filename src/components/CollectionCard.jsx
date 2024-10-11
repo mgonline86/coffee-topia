@@ -9,7 +9,7 @@ export default function CollectionCard ({ product }) {
       style={{ width: "18rem" }}
     >
       <Link to={`/products/?brands=${encodeURI(title)}`}>
-        <Card.Img variant="top" src={image} className="p-2" alt={title} />
+        <Card.Img variant="top" src={image} alt={title} />
       </Link>
       <Card.Body className="d-flex flex-column">
         <Card.Title as={Link} to={`/products/?brands=${encodeURI(title)}`} className="text-decoration-none h5">

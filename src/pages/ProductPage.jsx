@@ -51,8 +51,8 @@ export default function ProductPage() {
           <Image src={product.image} width={400} height={400} fluid />
         </Col>
         <Col xs={12} md={6} className="d-flex flex-column gap-4">
-          <h2>{product.title} </h2>
-          <h3>LE {product.price} </h3>
+          <h1 className="text-primary fw-bolder">{product.title}</h1>
+          <h3 className="fw-bold">EGP {product.price} </h3>
           <Row>
             <Col xs={12} md={4} className="mb-3 mb-md-0">
               <InputGroup className="h-100">
@@ -96,6 +96,8 @@ export default function ProductPage() {
             </Col>
           </Row>
 
+          <hr />
+          <h3 className="fw-bold">Description</h3>
           <p dangerouslySetInnerHTML={{ __html: product.description }} />
         </Col>
       </Row>

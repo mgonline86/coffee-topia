@@ -27,13 +27,13 @@ export default function CartTableRow({ item }) {
   );
 
   const viewTotal = useMemo(() => {
+    if (price === 0 || discount === 1) return "Free";
+    
     if (discount && discount > 0) {
       return (
         <div className="d-flex flex-column align-items-end justify-content-end gap-1">
           <span>EGP {((1 - discount) * price * qty).toFixed(2)}</span>
-          <span
-            className={`text-decoration-line-through text-muted ${styles.oldPrice}`}
-          >
+          <span className="text-decoration-line-through text-muted oldPrice">
             EGP {(price * qty).toFixed(2)}
           </span>
         </div>
@@ -43,13 +43,13 @@ export default function CartTableRow({ item }) {
   }, [discount, price, qty]);
 
   const viewPrice = useMemo(() => {
+    if (price === 0 || discount === 1) return "Free";
+
     if (discount && discount > 0) {
       return (
         <div className="d-flex flex-column align-items-end justify-content-end gap-1">
           <span>EGP {((1 - discount) * price).toFixed(2)}</span>
-          <span
-            className={`text-decoration-line-through text-muted ${styles.oldPrice}`}
-          >
+          <span className="text-decoration-line-through text-muted oldPrice">
             EGP {price.toFixed(2)}
           </span>
         </div>

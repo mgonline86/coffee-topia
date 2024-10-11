@@ -43,7 +43,7 @@ export default function ProductListPageX() {
             <ProductListView />
           </Col>
         </Row>
-        <div className="position-sticky bottom-0 start-50 translate-middle-x py-3" style={{ width: "fit-content" }}>
+        <div className="position-sticky bottom-0 start-50 translate-middle-x py-3 z-2" style={{ width: "fit-content" }}>
           <ProductListPagenation />
         </div>
       </Container>

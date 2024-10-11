@@ -1,9 +1,10 @@
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import CartTableRow from "../components/CartTableRow";
 import useCartContext from "../contexts/cartContext";
+import { Link } from "react-router-dom";
 
 export default function CartTableSection() {
-  const { cart, subTotal } = useCartContext();
+  const { cartLineItems, total } = useCartContext();
 
   return (
     <Container as="section" className="my-5">
@@ -24,14 +25,26 @@ export default function CartTableSection() {
             <Col className="text-end">Total</Col>
             <Col className="text-end">Remove</Col>
           </Row>
-          {Object.values(cart).map((item) => (
+          {cartLineItems.map((item) => (
             <CartTableRow key={item.product.id} item={item} />
           ))}
           <Row>
             <Col className="fw-bold text-end fs-5" xs sm={8} md={9} lg={10}>
-              Subtotal:
+              Total:
             </Col>
-            <Col className="fw-bold text-end fs-5">EGP {subTotal}</Col>
+            <Col className="fw-bold text-end fs-5">EGP {total.toFixed(2)}</Col>
+          </Row>
+          <Row className="mt-4">
+            <Col className="d-flex justify-content-center justify-content-lg-end">
+              <Link
+                to="/checkout"
+                variant="primary"
+                className="btn btn-primary w-100 py-2 fs-5 text-uppercase fw-semibold"
+                style={{ maxWidth: 300 }}
+              >
+                Checkout
+              </Link>
+            </Col>
           </Row>
         </Card.Body>
       </Card>

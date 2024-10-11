@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "DarlingCoffee";
+  src: local("DarlingCoffee"),
+    url("./fonts/DarlingCoffee.woff2") format("woff2"),
+    url("./fonts/DarlingCoffee.woff") format("woff");
+}
+
 $blue: #502d16;
 $gray-600: #e6d8cd;
 
@@ -13,6 +20,44 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.fancyFont {
+  font-family: "DarlingCoffee", serif;
+}
+
+.btn:hover .point-left {
+  animation: point-left 0.5s ease-in-out 2 alternate;
+}
+
+.card > a {
+  overflow: hidden;
+}
+
+.card-img-top {
+  object-fit: cover;
+  max-height: 12rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card-img-top:hover {
+  transform: scale(1.1);
+}
+
+.oldPrice {
+  font-size: 0.8rem;
+}
+
+@keyframes point-left {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 // Import Bootstrap and its default variables
