@@ -15,7 +15,7 @@ export default function ProductCard({ product }) {
       style={{ width: "16rem" }}
     >
       {product.discount > 0 && (
-        <Badge bg="danger" className="position-absolute top-0 end-0 z-1 m-2">
+        <Badge bg="danger" className="position-absolute top-0 end-0 m-2">
           {(product.discount * 100).toFixed(1)}% OFF
         </Badge>
       )}
