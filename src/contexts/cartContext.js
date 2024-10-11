@@ -18,12 +18,14 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+  const cartLineItems = useMemo(() => Object.values(cart), [cart]);
+
   const itemsCount = useMemo(
-    () => Object.values(cart).reduce((acc, { qty }) => acc + qty, 0),
-    [cart]
+    () => cartLineItems.reduce((acc, { qty }) => acc + qty, 0),
+    [cartLineItems]
   );
 
-  const addToCart = (product, newQty=1) => {
+  const addToCart = (product, newQty = 1) => {
     const strId = String(product.id);
     if (cart[strId]) {
       setCart((prev) => ({
@@ -67,24 +69,22 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const subTotal = useMemo(() => {
-    if (!cart) {
-      return 0;
-    }
-    const total = Object.values(cart).reduce(
-      (acc, { qty, product: { price, discount } }) => {
-        if (discount > 0) {
-          return acc + (price - price * discount) * qty;
-        }
-        return acc + price * qty;
-      },
-      0
-    );
-    return total.toFixed(2);
-  }, [cart]);
+  const [subTotal, totalDiscount, shipping, total] = useMemo(() => {
+    let subTotal = 0;
+    let discount = 0;
+    let total = 0;
+    let shipping = 10;
+    cartLineItems.forEach((item) => {
+      subTotal += item.product.price * item.qty;
+      discount += item.product.discount * item.product.price * item.qty;
+    });
+    total = subTotal - discount + shipping;
+    return [subTotal, discount, shipping, total];
+  }, [cartLineItems]);
 
   const value = {
     cart,
+    cartLineItems,
     addToCart,
     removeFromCart,
     updateCartQty,
@@ -93,6 +93,9 @@ export const CartProvider = ({ children }) => {
     handleShowCart,
     itemsCount,
     subTotal,
+    totalDiscount,
+    shipping,
+    total,
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

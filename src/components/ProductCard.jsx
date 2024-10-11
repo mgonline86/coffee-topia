@@ -1,9 +1,8 @@
+import { CoffeeIcon } from "lucide-react";
+import { Badge } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import styles from "./ProductCard.module.css";
-import { CoffeeIcon } from "lucide-react";
-import { Badge } from "react-bootstrap";
 import useCartContext from "../contexts/cartContext";
 
 export default function ProductCard({ product }) {
@@ -15,18 +14,17 @@ export default function ProductCard({ product }) {
       style={{ width: "16rem" }}
     >
       {product.discount > 0 && (
-        <Badge bg="danger" className="position-absolute top-0 end-0 m-2">
+        <Badge bg="danger" className="position-absolute top-0 end-0 z-1 m-2">
           {(product.discount * 100).toFixed(1)}% OFF
         </Badge>
       )}
-      <Link to={`/products/${slug}`} className="overflow-hidden">
+      <Link to={`/products/${slug}`}>
         <Card.Img
           variant="top"
           src={image
             .replaceAll(".jpg", "_x400.jpg")
             .replaceAll(".png", "_x400.png")
             .replaceAll(".webp", "_x400.webp")}
-          className={`p-2 ${styles.cardImage}`}
           alt={title}
         />
       </Link>
