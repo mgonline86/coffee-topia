@@ -20,8 +20,8 @@ export default function ProductsFilter() {
   } = useProductListContext();
   return (
     <Stack>
-      <div className="d-flex flex-column">
-        <Form.Group>
+      <Form className="d-flex flex-column">
+        <Form.Group controlId="productQuery">
           <Form.Label className="fs-6 fw-semibold">Search</Form.Label>
           <Form.Control
             type="search"
@@ -29,11 +29,12 @@ export default function ProductsFilter() {
             aria-label="Search"
             onChange={handleSearch}
             value={searchTerm}
+            name="productQuery"
           />
         </Form.Group>
         <hr className="text-muted" />
         <Form.Group className="d-flex flex-column gap-2">
-          <Form.Label className="fs-6 fw-semibold">Price</Form.Label>
+          <p className="fs-6 mb-2 fw-semibold">Price</p>
           <div>
             <InputGroup size="sm" className="mb-3">
               <InputGroup.Text>Min</InputGroup.Text>
@@ -45,6 +46,7 @@ export default function ProductsFilter() {
                 max={maxProductPrice}
                 onChange={handlePriceMinChange}
                 value={priceRange[0]}
+                name="minPrice"
               />
               <InputGroup.Text>EGP</InputGroup.Text>
             </InputGroup>
@@ -58,13 +60,14 @@ export default function ProductsFilter() {
                 max={maxProductPrice}
                 onChange={handlePriceMaxChange}
                 value={priceRange[1]}
+                name="maxPrice"
               />
               <InputGroup.Text>EGP</InputGroup.Text>
             </InputGroup>
           </div>
         </Form.Group>
         <hr className="text-muted" />
-        <Form.Group>
+        <Form.Group controlId="brands">
           <Form.Label className="fs-6 fw-semibold">Brands</Form.Label>
           <Select
             onChange={handleSelectBrand}
@@ -77,10 +80,11 @@ export default function ProductsFilter() {
               value: brand,
               label: brand,
             }))}
+            inputId="brands"
           />
         </Form.Group>
         <hr className="text-muted" />
-        <Form.Group>
+        <Form.Group controlId="tags">
           <Form.Label className="fs-6 fw-semibold">Tags</Form.Label>
           <Select
             onChange={handleSelectTag}
@@ -93,9 +97,10 @@ export default function ProductsFilter() {
               value: tag,
               label: tag,
             }))}
+            inputId="tags"
           />
         </Form.Group>
-      </div>
+      </Form>
     </Stack>
   );
 }
