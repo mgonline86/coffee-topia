@@ -2,7 +2,7 @@ import { ArrowLeftIcon } from "lucide-react";
 import { Button, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default function EmptyCartSection() {
+export default function EmptyCartSection({ closeFunction = null }) {
   return (
     <Container as="section" className="my-5 text-center">
       <div className="d-flex flex-column align-items-center gap-4">
@@ -14,8 +14,14 @@ export default function EmptyCartSection() {
           width={200}
           height={200}
         />
-        <Button variant="primary" as={Link} to="/products">
-          <ArrowLeftIcon className="me-2 point-left" />Continue shopping
+        <Button
+          variant="primary"
+          as={Link}
+          to="/products"
+          onClick={closeFunction ? () => closeFunction() : undefined}
+        >
+          <ArrowLeftIcon className="me-2 point-left" />
+          Continue shopping
         </Button>
       </div>
     </Container>

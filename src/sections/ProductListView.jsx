@@ -18,9 +18,9 @@ export default function ProductListView() {
           <h2 className="mt-3 text-primary">No products found!</h2>
         </Col>
       )}
-      {viewProducts.map((product) => (
+      {viewProducts.map((product, index) => (
         <Col key={product.id} xs={12} md={6} lg={4}>
-          <ProductCard product={product} />
+          <ProductCard product={product} index={index} />
         </Col>
       ))}
     </Row>

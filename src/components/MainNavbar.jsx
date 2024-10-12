@@ -1,4 +1,4 @@
-import { SearchIcon, ShoppingCartIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import { Badge, Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import useCartContext from "../contexts/cartContext";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
+import CartOffcanvas from "./CartOffcanvas";
 
 export default function MainNavbar() {
   const { itemsCount } = useCartContext();
@@ -32,22 +33,36 @@ export default function MainNavbar() {
         <div className="flex-grow-1 d-none d-lg-block">
           <SearchBar />
         </div>
-        <div className="d-lg-none d-flex align-items-center justify-content-end gap-2">
+        <div className="d-flex align-items-center justify-content-end gap-1 gap-md-2">
           <Button
-            variant="outline-primary"
-            className="border-0"
+            variant="link"
+            className="border-0 px-0 d-lg-none"
             onClick={handleShow}
           >
             <SearchIcon />
           </Button>
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={show} onHide={handleClose} className="d-lg-none">
             <Modal.Header closeButton>
               <Modal.Title>Search</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <SearchBar name="searchMobile" autoFocus={true} />
+              <SearchBar
+                name="searchMobile"
+                autoFocus={true}
+                closeModal={handleClose}
+              />
             </Modal.Body>
           </Modal>
+          <div className="position-relative mx-3">
+            <CartOffcanvas />
+            <Badge
+              bg="danger"
+              pill
+              className="position-absolute top-0 start-100 translate-middle"
+            >
+              {itemsCount > 99 ? "99+" : itemsCount}
+            </Badge>
+          </div>
           <Navbar.Toggle aria-controls="navbarScroll" />
         </div>
         <Navbar.Collapse id="navbarScroll" className="flex-grow-0">
@@ -60,20 +75,6 @@ export default function MainNavbar() {
             </Nav.Link>
             <Nav.Link as={Link} to={"/profile"}>
               Profile
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to={"/cart"}
-              className="position-relative py-0 mx-3"
-            >
-              <ShoppingCartIcon />
-              <Badge
-                bg="danger"
-                pill
-                className="position-absolute top-0 start-100 translate-middle"
-              >
-                {itemsCount > 99 ? "99+" : itemsCount}
-              </Badge>
             </Nav.Link>
           </Nav>
 

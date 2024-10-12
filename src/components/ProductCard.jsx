@@ -5,8 +5,8 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import useCartContext from "../contexts/cartContext";
 
-export default function ProductCard({ product }) {
-  const { addToCart } = useCartContext();
+export default function ProductCard({ product, index = null }) {
+  const { addToCart, handleShowCart } = useCartContext();
   const { title, price, image, slug } = product;
   return (
     <Card
@@ -26,6 +26,7 @@ export default function ProductCard({ product }) {
             .replaceAll(".png", "_x400.png")
             .replaceAll(".webp", "_x400.webp")}
           alt={title}
+          loading={index !== null && index < 8 ? "eager" : "lazy"} // preload images if first row
         />
       </Link>
       <Card.Body className="d-flex flex-column">
@@ -53,7 +54,10 @@ export default function ProductCard({ product }) {
             variant="primary"
             className="w-100 text-uppercase d-flex align-items-center justify-content-center gap-2"
             style={{ maxWidth: "10rem" }}
-            onClick={() => addToCart(product)}
+            onClick={() => {
+              addToCart(product);
+              handleShowCart();
+            }}
           >
             Add to Cart
             <CoffeeIcon />

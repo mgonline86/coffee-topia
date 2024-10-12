@@ -14,7 +14,7 @@ export default function ProductPage() {
   const product = getProductBySlug(slug);
 
   // import addToCart from cartContext
-  const { addToCart } = useCartContext();
+  const { addToCart, handleShowCart } = useCartContext();
 
   // create state for qty
   const [qty, setQty] = useState(1);
@@ -40,6 +40,7 @@ export default function ProductPage() {
   // handle add to cart
   const handleAddToCart = () => {
     addToCart(product, qty);
+    handleShowCart();
   };
 
   if (!product) {

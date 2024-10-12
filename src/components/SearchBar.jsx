@@ -3,7 +3,11 @@ import { Card, Form, Image, ListGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ProductContext from "../contexts/productContext";
 
-export default function SearchBar({ name = "search", autoFocus = false }) {
+export default function SearchBar({
+  name = "search",
+  autoFocus = false,
+  closeModal = null,
+}) {
   const { products } = useContext(ProductContext);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -14,6 +18,9 @@ export default function SearchBar({ name = "search", autoFocus = false }) {
     setSearchTerm("");
     navigate("/"); // workaround at products page
     setTimeout(() => navigate(`/products?q=${searchTerm}`), 10);
+    if (closeModal) {
+      closeModal();
+    }
   };
 
   const filteredProducts = useCallback(
@@ -38,6 +45,7 @@ export default function SearchBar({ name = "search", autoFocus = false }) {
         aria-label="Search"
         value={searchTerm}
         autoFocus={autoFocus}
+        autoComplete="off"
         onChange={(e) => setSearchTerm(e.target.value.trim())}
       />
       {searchTerm && (

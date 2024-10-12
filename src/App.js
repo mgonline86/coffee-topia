@@ -80,7 +80,7 @@ function App() {
               path="/products"
               element={
                 <>
-                <PageTitle title="ProductList | Coffee Topia" />
+                <PageTitle title="Products | Coffee Topia" />
                   <ProductListPage />
                 </>
               }
