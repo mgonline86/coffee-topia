@@ -80,6 +80,7 @@ export default function CartTableRow({ item }) {
             height={100}
             alt={title}
             style={{ objectFit: "contain" }}
+            loading="lazy"
           />
           {title}
         </Link>

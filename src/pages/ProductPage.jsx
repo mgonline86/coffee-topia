@@ -48,7 +48,14 @@ export default function ProductPage() {
     <Container className="my-5">
       <Row>
         <Col xs={12} md={6}>
-          <Image src={product.image} width={400} height={400} fluid />
+          <Image
+            src={product.image}
+            width={400}
+            height={400}
+            fluid
+            alt={product.title}
+            loading="eager"
+          />
         </Col>
         <Col xs={12} md={6} className="d-flex flex-column gap-4">
           <h1 className="text-primary fw-bolder">{product.title}</h1>
