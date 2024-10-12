@@ -6,6 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { useParams } from "react-router-dom";
 import useCartContext from "../contexts/cartContext";
 import ProductContext from "../contexts/productContext";
+import PageTitle from "../components/PageTitle";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -46,6 +47,7 @@ export default function ProductPage() {
   }
   return (
     <Container className="my-5">
+      <PageTitle title={`${product.title} | Coffee Topia`} />
       <Row>
         <Col xs={12} md={6}>
           <Image
