@@ -44,6 +44,11 @@ code {
   transform: scale(1.1);
 }
 
+.form-check.form-check-inline > input,
+.form-check.form-check-inline > label {
+  cursor: pointer;
+}
+
 .oldPrice {
   font-size: 0.8rem;
 }
