@@ -10,6 +10,7 @@ const initialCart = localStorage.getItem("cart")
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(initialCart);
   const [showCart, setShowCart] = useState(false);
+  
   const handleCloseCart = () => setShowCart(false);
   const handleShowCart = () => setShowCart(true);
 
@@ -84,6 +85,7 @@ export const CartProvider = ({ children }) => {
 
   const value = {
     cart,
+    setCart,
     cartLineItems,
     addToCart,
     removeFromCart,

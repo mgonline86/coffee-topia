@@ -32,7 +32,10 @@ export default function OrderSummaryItem({ item }) {
           {qty}
         </Badge>
         <Image
-          src={image}
+          src={image
+            .replaceAll(".jpg", "_x200.jpg")
+            .replaceAll(".png", "_x200.png")
+            .replaceAll(".webp", "_x200.webp")}
           thumbnail
           width={60}
           height={60}
@@ -41,6 +44,8 @@ export default function OrderSummaryItem({ item }) {
             objectPosition: "center",
             minWidth: 60,
           }}
+          alt={title}
+          loading="lazy"
         />
       </div>
       <p className="m-0">{title}</p>

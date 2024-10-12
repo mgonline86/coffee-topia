@@ -12,6 +12,7 @@ import RegisterPage from "./pages/RegisterPage";
 import CheckoutPage from "./components/CheckoutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import Footer from "./sections/Footer";
+import PageTitle from "./components/PageTitle";
 
 function App() {
   return (
@@ -21,15 +22,87 @@ function App() {
           <ScrollToTop />
           <MainNavbar />
           <Routes>
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/products/:slug" element={<ProductPage />} />
-            <Route path="/products" element={<ProductListPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={<HomePage />} />
+            <Route
+              path="/cart"
+              element={
+                <>
+                <PageTitle title="Cart | Coffee Topia" />
+                  <CartPage />
+                </>
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <>
+                <PageTitle title="Checkout | Coffee Topia" />
+                  <CheckoutPage />
+                </>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <>
+                <PageTitle title="Profile | Coffee Topia" />
+                  <ProfilePage />
+                </>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <>
+                <PageTitle title="Register | Coffee Topia" />
+                  <RegisterPage />
+                </>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <>
+                <PageTitle title="Login | Coffee Topia" />
+                  <LoginPage />
+                </>
+              }
+            />
+            <Route
+              path="/products/:slug"
+              element={
+                <>
+                <PageTitle title="Product | Coffee Topia" />
+                  <ProductPage />
+                </>
+              }
+            />
+            <Route
+              path="/products"
+              element={
+                <>
+                <PageTitle title="ProductList | Coffee Topia" />
+                  <ProductListPage />
+                </>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                <PageTitle title="Coffee Topia" />
+                  <HomePage />
+                </>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                <PageTitle title="Coffee Topia" />
+                  <HomePage />
+                </>
+              }
+            />
           </Routes>
           <Footer />
         </BrowserRouter>
