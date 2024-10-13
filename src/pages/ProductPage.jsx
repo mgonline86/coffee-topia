@@ -75,6 +75,7 @@ export default function ProductPage() {
                   -
                 </Button>
                 <Form.Control
+                  name="qty"
                   type="number"
                   className="fs-5 text-center"
                   value={qty}
