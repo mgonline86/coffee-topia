@@ -1,18 +1,16 @@
 import { SearchIcon } from "lucide-react";
-import { Badge, Modal } from "react-bootstrap";
+import { useState } from "react";
+import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import useCartContext from "../contexts/cartContext";
-import SearchBar from "./SearchBar";
-import { useState } from "react";
 import CartOffcanvas from "./CartOffcanvas";
+import SearchBar from "./SearchBar";
+import UserNavDropdown from "./UserNavDropdown";
 
 export default function MainNavbar() {
-  const { itemsCount } = useCartContext();
-
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -59,31 +57,20 @@ export default function MainNavbar() {
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to={"/products"}>
-                Products
+                All Products
               </Nav.Link>
-              <Nav.Link as={Link} to={"/profile"}>
-                Profile
+              <Nav.Link as={Link} to="/products?tags=coffee">
+                Coffee
+              </Nav.Link>
+              <Nav.Link as={Link} to="/products?tags=mugs">
+                Mugs
               </Nav.Link>
             </Nav>
-            <div className="d-flex gap-2 mx-2">
-              <Button as={Link} to={"/login"} variant="secondary">
-                Login
-              </Button>
-              <Button as={Link} to={"/register"} variant="primary">
-                Register
-              </Button>
-            </div>
+            <UserNavDropdown />
           </Navbar.Collapse>
-          <div className="position-relative mx-3">
-            <CartOffcanvas />
-            <Badge
-              bg="danger"
-              pill
-              className="position-absolute top-0 start-100 translate-middle"
-            >
-              {itemsCount > 99 ? "99+" : itemsCount}
-            </Badge>
-          </div>
+
+          <CartOffcanvas />
+
           <Navbar.Toggle aria-controls="navbarScroll" />
         </div>
       </Container>

@@ -24,11 +24,7 @@ export default function SearchBar({
   const handleFormSubmit = (event) => {
     event.preventDefault();
     setSearchTerm("");
-    navigate("/"); // workaround at products page
-    setTimeout(
-      () => navigate(`/products?q=${encodeURIComponent(searchTerm.trim())}`),
-      10
-    );
+    navigate(`/products?q=${encodeURIComponent(searchTerm.trim())}`);
     if (closeModal) {
       closeModal();
     }
