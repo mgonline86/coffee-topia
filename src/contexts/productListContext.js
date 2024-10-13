@@ -74,6 +74,14 @@ export const ProductListProvider = ({ children }) => {
     window.scrollTo(0, 0);
   };
 
+  const handleReset = () => {
+    setSearchTerm("");
+    setPriceRange([minProductPrice, maxProductPrice]);
+    setSelectedBrands([]);
+    setSelectedTags([]);
+    setCurrentPage(1);
+  };
+
   useEffect(() => {
     const params = new URLSearchParams();
     if (searchTerm) {
@@ -176,6 +184,7 @@ export const ProductListProvider = ({ children }) => {
         handlePriceMinChange,
         handleSelectBrand,
         handleSelectTag,
+        handleReset,
         searchTerm,
         priceRange,
         selectedBrands,
