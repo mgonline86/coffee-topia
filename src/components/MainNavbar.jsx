@@ -30,7 +30,7 @@ export default function MainNavbar() {
             height={45}
           />
         </Navbar.Brand>
-        <div className="flex-grow-1 d-none d-lg-block">
+        <div className="flex-grow-1 d-none d-lg-flex justify-content-center">
           <SearchBar />
         </div>
         <div className="d-flex align-items-center justify-content-end gap-1 gap-md-2">
@@ -53,6 +53,27 @@ export default function MainNavbar() {
               />
             </Modal.Body>
           </Modal>
+          <Navbar.Collapse id="navbarScroll" className="flex-grow-0">
+            <Nav className="ms-auto my-2 my-lg-0 align-items-center">
+              <Nav.Link as={Link} to={"/"}>
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to={"/products"}>
+                Products
+              </Nav.Link>
+              <Nav.Link as={Link} to={"/profile"}>
+                Profile
+              </Nav.Link>
+            </Nav>
+            <div className="d-flex gap-2 mx-2">
+              <Button as={Link} to={"/login"} variant="secondary">
+                Login
+              </Button>
+              <Button as={Link} to={"/register"} variant="primary">
+                Register
+              </Button>
+            </div>
+          </Navbar.Collapse>
           <div className="position-relative mx-3">
             <CartOffcanvas />
             <Badge
@@ -65,28 +86,6 @@ export default function MainNavbar() {
           </div>
           <Navbar.Toggle aria-controls="navbarScroll" />
         </div>
-        <Navbar.Collapse id="navbarScroll" className="flex-grow-0">
-          <Nav className="ms-auto my-2 my-lg-0 align-items-center">
-            <Nav.Link as={Link} to={"/"}>
-              Home
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/products"}>
-              Products
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/profile"}>
-              Profile
-            </Nav.Link>
-          </Nav>
-
-          <div className="d-flex gap-2 mx-2">
-            <Button as={Link} to={"/login"} variant="secondary">
-              Login
-            </Button>
-            <Button as={Link} to={"/register"} variant="primary">
-              Register
-            </Button>
-          </div>
-        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

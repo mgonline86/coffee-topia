@@ -33,7 +33,7 @@ export default function SearchBar({
   );
   return (
     <Form
-      className="d-flex flex-column position-relative"
+      className="d-flex flex-column position-relative w-100"
       style={{ maxWidth: "30rem" }}
       onSubmit={handleFormSubmit}
     >

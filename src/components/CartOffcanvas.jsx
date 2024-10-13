@@ -1,35 +1,35 @@
 import { ShoppingCartIcon } from "lucide-react";
-import { Col, Row } from "react-bootstrap";
+import { Col, Offcanvas, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import useCartContext from "../contexts/cartContext";
 import EmptyCartSection from "../sections/EmptyCartSection";
 import CartTableRow from "./CartTableRow";
-import CustomOffcanvas from "./CustomOffcanvas";
+import { useMemo } from "react";
 
 export default function CartOffcanvas() {
-  const { cartLineItems, total, handleCloseCart, handleShowCart, showCart } =
-    useCartContext();
+  const {
+    cartLineItems,
+    subTotal,
+    totalDiscount,
+    handleCloseCart,
+    handleShowCart,
+    showCart,
+  } = useCartContext();
+
+  const total = useMemo(() => {
+    return subTotal + totalDiscount;
+  }, [subTotal, totalDiscount]);
   return (
-    <CustomOffcanvas>
-      <CustomOffcanvas.Trigger
-        onClick={handleShowCart}
-        variant="link"
-        className="border-0 p-0"
-      >
+    <>
+      <Button onClick={handleShowCart} variant="link" className="border-0 p-0">
         <ShoppingCartIcon />
-      </CustomOffcanvas.Trigger>
-      <CustomOffcanvas.Offcanvas
-        show={showCart}
-        onHide={handleCloseCart}
-        placement="end"
-      >
-        <CustomOffcanvas.Offcanvas.Header closeButton>
-          <CustomOffcanvas.Offcanvas.Title>
-            Your Cart
-          </CustomOffcanvas.Offcanvas.Title>
-        </CustomOffcanvas.Offcanvas.Header>
-        <CustomOffcanvas.Offcanvas.Body>
+      </Button>
+      <Offcanvas show={showCart} onHide={handleCloseCart} placement="end">
+        <Offcanvas.Header closeButton className="shadow-sm">
+          <Offcanvas.Title>Your Cart</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
           {cartLineItems.length === 0 ? (
             <EmptyCartSection closeFunction={handleCloseCart} />
           ) : (
@@ -43,8 +43,8 @@ export default function CartOffcanvas() {
               ))}
             </>
           )}
-        </CustomOffcanvas.Offcanvas.Body>
-        <div className="p-3">
+        </Offcanvas.Body>
+        <div className="p-3 shadow-lg">
           <Row>
             <Col className="fw-bold fs-5">Total:</Col>
             <Col xs="auto" className="fw-bold text-end fs-5">
@@ -81,7 +81,7 @@ export default function CartOffcanvas() {
             </Col>
           </Row>
         </div>
-      </CustomOffcanvas.Offcanvas>
-    </CustomOffcanvas>
+      </Offcanvas>
+    </>
   );
 }
