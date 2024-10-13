@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import CartOffcanvas from "./CartOffcanvas";
 import SearchBar from "./SearchBar";
 import UserNavDropdown from "./UserNavDropdown";
@@ -15,13 +15,6 @@ export default function MainNavbar() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const navigate = useNavigate();
-
-  const handleNavigate = (path) => {
-    navigate("/");
-    setTimeout(() => navigate(path), 10);
-  };
 
   return (
     <Navbar expand="lg" className="bg-white shadow" sticky="top">
@@ -63,15 +56,13 @@ export default function MainNavbar() {
               <Nav.Link as={Link} to={"/"}>
                 Home
               </Nav.Link>
-              <Nav.Link onClick={() => handleNavigate("/products")}>
+              <Nav.Link as={Link} to={"/products"}>
                 All Products
               </Nav.Link>
-              <Nav.Link
-                onClick={() => handleNavigate("/products?tags=coffee")}
-              >
+              <Nav.Link as={Link} to="/products?tags=coffee">
                 Coffee
               </Nav.Link>
-              <Nav.Link onClick={() => handleNavigate("/products?tags=mugs")}>
+              <Nav.Link as={Link} to="/products?tags=mugs">
                 Mugs
               </Nav.Link>
             </Nav>

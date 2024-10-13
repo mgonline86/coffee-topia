@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { createContext, useContext } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ProductContext from "../contexts/productContext";
 
 const ProductListContext = createContext();
@@ -9,168 +9,137 @@ export const ProductListProvider = ({ children }) => {
     useContext(ProductContext);
   const productsPerPage = 24;
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageFromQuery = parseInt(searchParams.get("page")) || 1;
-  const brandsFromQuery = searchParams.get("brands")?.split(",").filter(Boolean) || [];
-  const tagsFromQuery = searchParams.get("tags")?.split(",").filter(Boolean) || [];
-  const searchTermFromQuery = searchParams.get("q") || "";
-  const minPriceFromQuery = parseInt(searchParams.get("minPrice"));
-  const maxPriceFromQuery = parseInt(searchParams.get("maxPrice"));
-  const [currentPage, setCurrentPage] = useState(pageFromQuery);
-  const [searchTerm, setSearchTerm] = useState(searchTermFromQuery);
-  const [priceRange, setPriceRange] = useState([
-    minPriceFromQuery || minProductPrice,
-    maxPriceFromQuery || maxProductPrice,
-  ]);
-  const [selectedBrands, setSelectedBrands] = useState(brandsFromQuery);
-  const [selectedTags, setSelectedTags] = useState(tagsFromQuery);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  let currentPage = parseInt(searchParams.get("page")) || 1;
+  const selectedBrands =
+    searchParams.get("brands")?.split(",").filter(Boolean) || [];
+  const selectedTags =
+    searchParams.get("tags")?.split(",").filter(Boolean) || [];
+  const searchTerm = searchParams.get("q") || "";
+  const minPriceFromQuery =
+    parseInt(searchParams.get("minPrice")) || minProductPrice;
+  const maxPriceFromQuery =
+    parseInt(searchParams.get("maxPrice")) || maxProductPrice;
+  const priceRange = [minPriceFromQuery, maxPriceFromQuery];
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
+  const handlePageChange = (page) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", page);
+    navigate(`?${newSearchParams.toString()}`);
   };
-
+  const handleSearch = (event) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("q", event.target.value);
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
+  };
   const handlePriceMaxChange = (event) => {
-    const newValue = parseInt(event.target.value);
-    if (isNaN(newValue)) {
-      setPriceRange([priceRange[0], maxProductPrice]);
+    let newValue = parseInt(event.target.value);
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (!newValue) {
+      newSearchParams.delete("maxPrice");
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
       return;
     }
-    setPriceRange([priceRange[0], newValue]);
-    setCurrentPage(1);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("maxPrice", newValue);
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
   };
 
   const handlePriceMinChange = (event) => {
-    const newValue = parseInt(event.target.value);
-    if (isNaN(newValue)) {
-      setPriceRange([minProductPrice, priceRange[1]]);
+    let newValue = parseInt(event.target.value);
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (!newValue) {
+      newSearchParams.delete("minPrice");
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
       return;
     }
-    setPriceRange([newValue, priceRange[1]]);
-    setCurrentPage(1);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("minPrice", newValue);
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
   };
 
   const handleSelectBrand = (entry) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
     if (!entry) {
-      setSelectedBrands([]);
-      return;
+      newSearchParams.delete("brands");
     }
-    setSelectedBrands(entry.map((entry) => entry.value));
-    setCurrentPage(1);
+    newSearchParams.set("brands", entry.map((entry) => entry.value).join(","));
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
   };
 
   const handleSelectTag = (entry) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
     if (!entry) {
-      setSelectedTags([]);
-      return;
+      newSearchParams.delete("tags");
     }
-    setSelectedTags(entry.map((entry) => entry.value));
-    setCurrentPage(1);
+    newSearchParams.set("tags", entry.map((entry) => entry.value).join(","));
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
   };
-
-  const handlePageChange = (page) => {
-    page = parseInt(page);
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
-  };
-
   const handleReset = () => {
-    setSearchTerm("");
-    setPriceRange([minProductPrice, maxProductPrice]);
-    setSelectedBrands([]);
-    setSelectedTags([]);
-    setCurrentPage(1);
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.delete("page");
+    newSearchParams.delete("q");
+    newSearchParams.delete("brands");
+    newSearchParams.delete("tags");
+    newSearchParams.delete("minPrice");
+    newSearchParams.delete("maxPrice");
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (searchTerm) {
-      params.set("q", searchTerm);
-    }
-    if (priceRange[0] !== minProductPrice) {
-      params.set("minPrice", priceRange[0]);
-    }
-    if (priceRange[1] !== maxProductPrice) {
-      params.set("maxPrice", priceRange[1]);
-    }
-    if (selectedBrands.length > 0) {
-      params.set("brands", selectedBrands.join(","));
-    }
-    if (selectedTags.length > 0) {
-      params.set("tags", selectedTags.join(","));
-    }
-    params.set("page", currentPage);
+  let pagesCount = Math.ceil(products.length / productsPerPage);
 
-    setSearchParams(params, { replace: true });
-  }, [
-    currentPage,
-    selectedBrands,
-    selectedTags,
-    searchTerm,
-    priceRange,
-    minProductPrice,
-    maxProductPrice,
-    setSearchParams,
-  ]);
+  const viewProducts =
+    (() => {
+      let productSlice = [...products];
+      if (currentPage <= 0 || currentPage > pagesCount) {
+        currentPage = 1;
+      }
 
-  const [pagesCount, setPagesCount] = useState(
-    Math.ceil(products.length / productsPerPage)
-  );
+      if (searchTerm) {
+        productSlice = productSlice.filter((product) =>
+          product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
 
-  const viewProducts = useMemo(() => {
-    let productSlice = [...products];
-    if (currentPage <= 0 || currentPage > pagesCount) {
-      setCurrentPage(1);
-    }
-
-    if (searchTerm) {
-      productSlice = productSlice.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    if (
-      priceRange[0] !== minProductPrice ||
-      priceRange[1] !== maxProductPrice
-    ) {
-      productSlice = productSlice.filter((product) => {
-        if (product.discount > 0) {
+      if (
+        minPriceFromQuery !== minProductPrice ||
+        maxPriceFromQuery !== maxProductPrice
+      ) {
+        productSlice = productSlice.filter((product) => {
+          if (product.discount > 0) {
+            return (
+              product.price * (1 - product.discount) >= priceRange[0] &&
+              product.price * (1 - product.discount) <= priceRange[1]
+            );
+          }
           return (
-            product.price * (1 - product.discount) >= priceRange[0] &&
-            product.price * (1 - product.discount) <= priceRange[1]
+            product.price >= priceRange[0] && product.price <= priceRange[1]
           );
-        }
-        return product.price >= priceRange[0] && product.price <= priceRange[1];
-      });
-    }
+        });
+      }
 
-    if (selectedBrands.length > 0) {
-      productSlice = productSlice.filter((product) => {
-        return selectedBrands.some((brand) => product.brand === brand);
-      });
-    }
-    if (selectedTags.length > 0) {
-      productSlice = productSlice.filter((product) => {
-        return selectedTags.some((tag) => product.tags.includes(tag));
-      });
-    }
+      if (selectedBrands.length > 0) {
+        productSlice = productSlice.filter((product) => {
+          return selectedBrands.some((brand) => product.brand === brand);
+        });
+      }
 
-    setPagesCount(Math.ceil(productSlice.length / productsPerPage));
-    return productSlice.slice(
-      (currentPage - 1) * productsPerPage,
-      currentPage * productsPerPage
-    );
-  }, [
-    currentPage,
-    products,
-    pagesCount,
-    selectedBrands,
-    selectedTags,
-    searchTerm,
-    priceRange,
-    maxProductPrice,
-    minProductPrice,
-  ]);
+      if (selectedTags.length > 0) {
+        productSlice = productSlice.filter((product) => {
+          return selectedTags.some((tag) => product.tags.includes(tag));
+        });
+      }
+
+      pagesCount = Math.ceil(productSlice.length / productsPerPage);
+      return productSlice.slice(
+        (currentPage - 1) * productsPerPage,
+        currentPage * productsPerPage
+      );
+    })() || [];
 
   return (
     <ProductListContext.Provider
