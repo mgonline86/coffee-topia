@@ -1,7 +1,15 @@
 import { useCallback, useContext, useState } from "react";
-import { Card, Form, Image, ListGroup } from "react-bootstrap";
+import {
+  Card,
+  Form,
+  Image,
+  ListGroup,
+  InputGroup,
+  Button,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import ProductContext from "../contexts/productContext";
+import { SearchIcon } from "lucide-react";
 
 export default function SearchBar({
   name = "search",
@@ -17,7 +25,10 @@ export default function SearchBar({
     event.preventDefault();
     setSearchTerm("");
     navigate("/"); // workaround at products page
-    setTimeout(() => navigate(`/products?q=${searchTerm}`), 10);
+    setTimeout(
+      () => navigate(`/products?q=${encodeURIComponent(searchTerm.trim())}`),
+      10
+    );
     if (closeModal) {
       closeModal();
     }
@@ -26,28 +37,42 @@ export default function SearchBar({
   const filteredProducts = useCallback(
     (searchTerm) => {
       return products.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        product.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
       );
     },
     [products]
   );
+
+  const handleListItemClick = () => {
+    setSearchTerm("");
+    if (closeModal) {
+      closeModal();
+    }
+  };
+
   return (
     <Form
       className="d-flex flex-column position-relative w-100"
       style={{ maxWidth: "30rem" }}
       onSubmit={handleFormSubmit}
     >
-      <Form.Control
-        type="search"
-        name={name}
-        placeholder="Search"
-        className="me-2"
-        aria-label="Search"
-        value={searchTerm}
-        autoFocus={autoFocus}
-        autoComplete="off"
-        onChange={(e) => setSearchTerm(e.target.value.trim())}
-      />
+      <InputGroup className="me-2">
+        <Form.Control
+          type="search"
+          name={name}
+          placeholder="Search"
+          aria-label="Search"
+          value={searchTerm}
+          autoFocus={autoFocus}
+          autoComplete="off"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onBlur={(e) => setSearchTerm(e.target.value.trim())}
+        />
+        <Button variant="outline-primary" type="submit">
+          <SearchIcon />
+        </Button>
+      </InputGroup>
+
       {searchTerm && (
         <Card className="position-absolute top-100 start-0 mt-2 shadow w-100">
           <Card.Header>
@@ -66,7 +91,7 @@ export default function SearchBar({
                     as={Link}
                     action
                     to={`/products/${slug}`}
-                    onClick={() => setSearchTerm("")}
+                    onClick={handleListItemClick}
                   >
                     <div className="d-flex gap-3">
                       <div>

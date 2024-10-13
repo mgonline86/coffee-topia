@@ -8,6 +8,7 @@ export default function ThankYouSection({
 }) {
   const { setCart, cart } = useCartContext();
   useEffect(() => {
+    window.scrollTo(0, 0);
     setCart(cart);
     return () => {
       setCart({});

@@ -31,23 +31,23 @@ export default function CheckoutPage() {
           >
             <Button
               variant="link"
-              className="px-0"
+              className="px-0 fs-6"
               aria-controls="order-summary-collapse"
               aria-expanded={open}
             >
               {open ? (
                 <>
-                  Hide Order Summary
+                  Hide Summary
                   <ChevronUpIcon />
                 </>
               ) : (
                 <>
-                  Show Order Summary
+                  Show Summary
                   <ChevronDownIcon />
                 </>
               )}
             </Button>
-            <p className="m-0 fs-5 fw-semibold">EGP {total.toFixed(2)}</p>
+            <p className="m-0 fs-6 fw-semibold">EGP {total.toFixed(2)}</p>
           </div>
           <Collapse in={open}>
             <div id="order-summary-collapse" className="py-3">

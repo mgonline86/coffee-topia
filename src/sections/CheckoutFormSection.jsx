@@ -61,13 +61,13 @@ export default function CheckoutFormSection() {
 
   // Define validations
   const validations = {
-    name: (value) => value.length > 2, // Minimum 3 characters
+    name: (value) => value.trim().length > 2, // Minimum 3 characters
     email: (value) =>
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value), // Valid email format
-    address: (value) => value.length > 20, // Minimum 20 characters
-    phone: (value) => /^(\+201\d{9}|01\d{9})$/.test(value), // Valid Egyptian phone number format
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value.trim()), // Valid email format
+    address: (value) => value.trim().length > 20, // Minimum 20 characters
+    phone: (value) => /^(\+201\d{9}|01\d{9})$/.test(value.trim()), // Valid Egyptian phone number format
     cardNumber: (value) => {
-      const processedValue = value.slice(0, 19).replaceAll(" ", ""); // Remove whitespace and limit to 16 digits
+      const processedValue = value.trim().slice(0, 19).replaceAll(" ", ""); // Remove whitespace and limit to 16 digits
       return /^\d{16}$/.test(processedValue); // Valid card number format
     },
   };
@@ -79,7 +79,7 @@ export default function CheckoutFormSection() {
     const isTouched = true;
     const isDirty = value !== "";
     setters[id]({
-      value: value.trim(),
+      value,
       isValid,
       isTouched,
       isDirty,
@@ -100,10 +100,26 @@ export default function CheckoutFormSection() {
     }
     const isFormValid = formValidations.every((valid) => valid);
     if (!isFormValid) {
-      setName((prev) => ({ ...prev, isTouched: true }));
-      setEmail((prev) => ({ ...prev, isTouched: true }));
-      setAddress((prev) => ({ ...prev, isTouched: true }));
-      setPhone((prev) => ({ ...prev, isTouched: true }));
+      setName((prev) => ({
+        ...prev,
+        value: prev.value.trim(),
+        isTouched: true,
+      }));
+      setEmail((prev) => ({
+        ...prev,
+        value: prev.value.trim(),
+        isTouched: true,
+      }));
+      setAddress((prev) => ({
+        ...prev,
+        value: prev.value.trim(),
+        isTouched: true,
+      }));
+      setPhone((prev) => ({
+        ...prev,
+        value: prev.value.trim(),
+        isTouched: true,
+      }));
       if (paymentMethod === "Credit Card") {
         setCardNumber((prev) => ({
           ...prev,
@@ -115,14 +131,16 @@ export default function CheckoutFormSection() {
 
     // Submit form
     const formData = {
-      name: name.value,
-      email: email.value,
-      address: address.value,
-      phone: phone.value,
+      name: name.value.trim(),
+      email: email.value.trim(),
+      address: address.value.trim(),
+      phone: phone.value.trim(),
       paymentMethod,
-      cardNumber: cardNumber.value.replaceAll(" ", ""),
+      cardNumber: cardNumber.value.replaceAll(" ", "").trim(),
     };
+
     console.log("Form submitted successfully:\n", formData);
+    
     setShowThankYou(true);
   };
 
@@ -143,7 +161,7 @@ export default function CheckoutFormSection() {
 
   return (
     <Form
-      className="bg-secondary text-primary rounded-4 p-5 shadow"
+      className="bg-secondary text-primary rounded-4 py-4 px-3 p-lg-5 shadow"
       onSubmit={handleSubmit}
       noValidate
     >
