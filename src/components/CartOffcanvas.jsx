@@ -1,5 +1,5 @@
 import { ShoppingCartIcon } from "lucide-react";
-import { Col, Offcanvas, Row } from "react-bootstrap";
+import { Badge, Col, Offcanvas, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import useCartContext from "../contexts/cartContext";
@@ -9,6 +9,7 @@ import { useMemo } from "react";
 
 export default function CartOffcanvas() {
   const {
+    itemsCount,
     cartLineItems,
     subTotal,
     totalDiscount,
@@ -22,7 +23,19 @@ export default function CartOffcanvas() {
   }, [subTotal, totalDiscount]);
   return (
     <>
-      <Button onClick={handleShowCart} variant="link" className="border-0 p-0">
+      <Button
+        onClick={handleShowCart}
+        variant="link"
+        className="position-relative"
+      >
+        <Badge
+          bg="danger"
+          pill
+          className="position-absolute"
+          style={{ top: "-0.3rem", right: "-0.2rem", fontSize: "0.65rem" }}
+        >
+          {itemsCount > 99 ? "99+" : itemsCount}
+        </Badge>
         <ShoppingCartIcon />
       </Button>
       <Offcanvas show={showCart} onHide={handleCloseCart} placement="end">
