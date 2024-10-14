@@ -7,8 +7,8 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <FeaturedProducts />
       <Collection />
+      <FeaturedProducts />
     </>
   );
 }

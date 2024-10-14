@@ -1,0 +1,18 @@
+.collectionCard {
+  width: 16rem;
+}
+
+@media screen and (max-width: 576px) {
+  .collectionCard {
+    width: 8rem;
+  }
+
+  .collectionCardImg {
+    height: 4rem;
+    object-fit: contain;
+  }
+
+  .collectionCardTitle {
+    font-size: 0.7rem;
+  }
+}

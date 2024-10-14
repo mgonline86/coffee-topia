@@ -19,7 +19,7 @@ export default function ProductListView() {
         </Col>
       )}
       {viewProducts.map((product, index) => (
-        <Col key={product.id} xs={12} md={6} lg={4}>
+        <Col xs={6} sm key={product.id}>
           <ProductCard product={product} index={index} />
         </Col>
       ))}
