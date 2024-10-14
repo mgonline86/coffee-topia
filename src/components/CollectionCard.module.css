@@ -8,8 +8,7 @@
   }
 
   .collectionCardImg {
-    height: 4rem;
-    object-fit: contain;
+    height: 8rem;
   }
 
   .collectionCardTitle {
