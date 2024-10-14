@@ -16,8 +16,7 @@
   }
 
   .productCardImg {
-    height: 4rem;
-    object-fit: contain;
+    height: 6rem;
   }
 
   .productCardTitle {
