@@ -1,0 +1,43 @@
+.productCard {
+  width: 16rem;
+}
+
+.productCardBtn {
+  max-width: 10rem;
+}
+
+@media screen and (max-width: 576px) {
+  .productCard {
+    width: 8rem;
+  }
+
+  .productCardBadge {
+    font-size: 0.5rem;
+  }
+
+  .productCardImg {
+    height: 4rem;
+    object-fit: contain;
+  }
+
+  .productCardTitle {
+    font-size: 0.7rem;
+  }
+
+  .productCardPriceContainer {
+    gap: 0 !important;
+  }
+
+  .productCardPrice {
+    font-size: 0.75rem !important;
+  }
+
+  .productCardBtn {
+    font-size: 0.6rem;
+  }
+
+  .productCardBtnIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+}

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ThankYouSection from "./ThankYouSection";
 
-export default function CheckoutFormSection() {
+export default function CheckoutFormSection({ closeSummary = null }) {
   // Define states
   const [showThankYou, setShowThankYou] = useState(false);
   const [name, setName] = useState({
@@ -140,8 +140,9 @@ export default function CheckoutFormSection() {
     };
 
     console.log("Form submitted successfully:\n", formData);
-    
+
     setShowThankYou(true);
+    if (closeSummary) closeSummary();
   };
 
   if (showThankYou) {

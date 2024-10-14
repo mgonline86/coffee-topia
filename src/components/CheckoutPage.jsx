@@ -23,7 +23,7 @@ export default function CheckoutPage() {
 
   return (
     <Container as="section" className="my-5">
-      <Row className="g-5">
+      <Row className="g-3 g-lg-5 ">
         <Col xs={12} lg={6} className="d-block d-lg-none">
           <div
             className="d-flex align-items-center justify-content-between"
@@ -56,7 +56,7 @@ export default function CheckoutPage() {
           </Collapse>
         </Col>
         <Col xs={12} lg={6}>
-          <CheckoutFormSection />
+          <CheckoutFormSection closeSummary={() => setOpen(false)} />
         </Col>
         <Col xs={12} lg={6} className="d-none d-lg-block">
           <OrderSummarySection />
