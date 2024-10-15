@@ -38,8 +38,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(initialUser);
   const [users, setUsers] = useState([...dummyUsers, ...localUsers]);
   const [isLogged, setIsLogged] = useState(
-    JSON.stringify(initialUser) !== "{}" ||
-      JSON.stringify(initialUser) !== '"null"'
+    JSON.stringify(initialUser) !== "{}" && initialUser !== null
   );
 
   async function hashPassword(password) {
@@ -152,7 +151,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
   }, [user]);
 
   const value = {
