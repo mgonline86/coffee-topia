@@ -1,7 +1,7 @@
 import { Form, InputGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Select from "react-select";
-import useProductListContext from "../contexts/productListContext";
+import useProductListContext from "../contexts/ProductListContext";
 
 export default function ProductsFilter({ closeOffcanvas = null }) {
   const {

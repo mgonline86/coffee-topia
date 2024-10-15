@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 import OrderSummarySection from "../sections/OrderSummarySection";
 import { useNavigate } from "react-router-dom";
 import CheckoutFormSection from "../sections/CheckoutFormSection";

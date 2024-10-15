@@ -2,7 +2,7 @@ import { ShoppingCartIcon } from "lucide-react";
 import { Badge, Col, Offcanvas, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 import EmptyCartSection from "../sections/EmptyCartSection";
 import CartTableRow from "./CartTableRow";
 import { useMemo } from "react";

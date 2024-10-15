@@ -2,7 +2,7 @@ import { Trash2Icon } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { Button, Col, Form, Image, InputGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 import styles from "./CartTableRow.module.css";
 
 export default function CartTableRow({ item, compactView = false }) {
@@ -132,6 +132,7 @@ export default function CartTableRow({ item, compactView = false }) {
             max={99}
             onBlur={(e) => validateQty(e, id)}
             style={{ textAlign: "center", maxWidth: 60 }}
+            name="qty"
           />
           <Button
             variant="outline-secondary"

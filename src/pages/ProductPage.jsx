@@ -4,8 +4,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useParams } from "react-router-dom";
-import useCartContext from "../contexts/cartContext";
-import ProductContext from "../contexts/productContext";
+import useCartContext from "../contexts/CartContext";
+import ProductContext from "../contexts/ProductContext";
 import PageTitle from "../components/PageTitle";
 
 export default function ProductPage() {
