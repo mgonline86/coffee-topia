@@ -45,20 +45,20 @@ export default function ProductCard({ product, index = null }) {
           {product.discount > 0 ? (
             <Card.Text
               as="div"
-              className={`d-flex align-items-baseline gap-2 fw-bold fs-5 align-self-start flex-wrap flex-md-nowrap mb-2 mb-md-3 ${styles.productCardPriceContainer}`}
+              className={`d-flex align-items-baseline fw-bold fs-5 align-self-start flex-wrap flex-md-nowrap mb-2 mb-md-3 ${styles.productCardPriceContainer}`}
             >
               <span className={styles.productCardPrice}>
                 EGP {(price - price * product.discount).toFixed(1)}
               </span>
               <span
-                className={`text-decoration-line-through fs-6 text-muted ${styles.productCardPrice}`}
+                className={`text-decoration-line-through text-muted ${styles.productCardComparePrice}`}
               >
                 EGP {price.toFixed(1)}
               </span>
             </Card.Text>
           ) : (
             <Card.Text
-              className={`fw-bold align-self-start mb-2 mb-md-3 fs-5 ${styles.productCardPrice}`}
+              className={`fw-bold align-self-start mb-2 mb-md-3 ${styles.productCardPrice}`}
             >
               EGP {price.toFixed(1)}
             </Card.Text>

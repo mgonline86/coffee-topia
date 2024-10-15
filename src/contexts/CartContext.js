@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import useToastContext from "./ToastContext";
 
 const CartContext = createContext();
 
@@ -8,9 +9,11 @@ const initialCart = localStorage.getItem("cart")
   : {};
 
 export const CartProvider = ({ children }) => {
+  const maxQty = 99;
+  const { toast } = useToastContext();
   const [cart, setCart] = useState(initialCart);
   const [showCart, setShowCart] = useState(false);
-  
+
   const handleCloseCart = () => setShowCart(false);
   const handleShowCart = () => setShowCart(true);
 
@@ -29,6 +32,16 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product, newQty = 1) => {
     const strId = String(product.id);
     if (cart[strId]) {
+      // if max qty reached
+      const currentQty = cart[strId]?.qty || 0;
+      if (newQty + currentQty > maxQty) {
+        setCart((prev) => ({
+          ...prev,
+          [strId]: { ...prev[strId], qty: maxQty },
+        }));
+        toast.error("Max quantity reached", { position: "bottom-center" });
+        return;
+      }
       setCart((prev) => ({
         ...prev,
         [strId]: { ...prev[strId], qty: prev[strId].qty + newQty },
@@ -58,6 +71,16 @@ export const CartProvider = ({ children }) => {
     }
 
     if (cart[strId]) {
+      // if max qty reached
+      if (qty > maxQty) {
+        setCart((prev) => ({
+          ...prev,
+          [strId]: { ...prev[strId], qty: maxQty },
+        }));
+        toast.error("Max quantity reached", { position: "bottom-center" });
+        return;
+      }
+
       setCart((prev) => ({
         ...prev,
         [strId]: { ...prev[strId], qty },

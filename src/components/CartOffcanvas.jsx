@@ -26,13 +26,14 @@ export default function CartOffcanvas() {
       <Button
         onClick={handleShowCart}
         variant="link"
+        size="sm"
         className="position-relative"
       >
         <Badge
           bg="danger"
           pill
-          className="position-absolute"
-          style={{ top: "-0.3rem", right: "-0.2rem", fontSize: "0.65rem" }}
+          className="position-absolute top-0 translate-middle"
+          style={{ left: "90%", fontSize: "0.65rem" }}
         >
           {itemsCount > 99 ? "99+" : itemsCount}
         </Badge>
@@ -52,6 +53,7 @@ export default function CartOffcanvas() {
                   key={item.product.id}
                   item={item}
                   compactView={true}
+                  closeCart={handleCloseCart}
                 />
               ))}
             </>

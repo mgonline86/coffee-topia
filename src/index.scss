@@ -65,5 +65,13 @@ code {
   }
 }
 
+/* Mobile Nabar */
+.navLink.active {
+  background-color: $blue;
+  color: $gray-600!important;
+  border-radius: 10px;
+}
+/* Mobile Nabar */
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";

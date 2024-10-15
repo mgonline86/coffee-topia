@@ -18,6 +18,7 @@ export default function SearchBar({
 }) {
   const { products } = useContext(ProductContext);
   const [searchTerm, setSearchTerm] = useState("");
+  const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,6 +47,11 @@ export default function SearchBar({
     }
   };
 
+  const handleBlur = (e) => {
+    setSearchTerm(e.target.value.trim());
+    setTimeout(() => setShow(false), 10);
+  };
+
   return (
     <Form
       className="d-flex flex-column position-relative w-100"
@@ -62,14 +68,15 @@ export default function SearchBar({
           autoFocus={autoFocus}
           autoComplete="off"
           onChange={(e) => setSearchTerm(e.target.value)}
-          onBlur={(e) => setSearchTerm(e.target.value.trim())}
+          onFocus={() => setShow(true)}
+          onBlur={(e) => handleBlur(e)}
         />
         <Button variant="outline-primary" type="submit">
           <SearchIcon />
         </Button>
       </InputGroup>
 
-      {searchTerm && (
+      {searchTerm && show && (
         <Card className="position-absolute top-100 start-0 mt-2 shadow w-100">
           <Card.Header>
             <Card.Title>{`Found ${
@@ -89,7 +96,7 @@ export default function SearchBar({
                     to={`/products/${slug}`}
                     onClick={handleListItemClick}
                   >
-                    <div className="d-flex gap-3">
+                    <div className="d-flex gap-3 align-items-center">
                       <div>
                         <Image
                           src={image}

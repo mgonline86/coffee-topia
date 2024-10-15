@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (isLogged) {
-      toast.success("You are logged in", { position: "bottom-right" });
+      toast.success("You are logged in", { position: "bottom-center" });
       navigate("/");
     }
   }, [isLogged, navigate, toast]);
@@ -187,125 +187,130 @@ export default function RegisterPage() {
   };
 
   return (
-    <Container className="my-5" style={{ maxWidth: "30rem" }}>
+    <Container className="my-5" style={{ maxWidth: "60rem" }}>
       <h2 className="text-center mb-4">Register</h2>
-      <Form className="shadow rounded-3 p-4" onSubmit={handleSubmit} noValidate>
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="John Doe"
-            required
-            onChange={validateForm}
-            value={name.value}
-            autoFocus
-            autoComplete="name"
-            isValid={name.isDirty && name.isValid}
-            isInvalid={name.isTouched && !name.isValid}
-          />
-          {name.isTouched && !name.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {name.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="johndoe@example"
-            required
-            onChange={validateForm}
-            value={email.value}
-            autoComplete="email"
-            isValid={email.isDirty && email.isValid}
-            isInvalid={email.isTouched && !email.isValid}
-          />
-          {email.isTouched && !email.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {email.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="address">
-          <Form.Label>Address</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="456 Elm St, Example City, USA, 90210"
-            required
-            onChange={validateForm}
-            value={address.value}
-            autoComplete="address"
-            isValid={address.isDirty && address.isValid}
-            isInvalid={address.isTouched && !address.isValid}
-          />
-          {address.isTouched && !address.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {address.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="phone">
-          <Form.Label>Mobile Number</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="+20123456789"
-            required
-            onChange={validateForm}
-            value={phone.value}
-            autoComplete="phone"
-            isValid={phone.isDirty && phone.isValid}
-            isInvalid={phone.isTouched && !phone.isValid}
-          />
-          {phone.isTouched && !phone.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {phone.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            required
-            onChange={validateForm}
-            value={password.value.trim().replaceAll(" ", "")}
-            autoComplete="new-password"
-            isValid={password.isDirty && password.isValid}
-            isInvalid={password.isTouched && !password.isValid}
-          />
-          {password.isTouched && !password.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {password.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            required
-            onChange={validateForm}
-            value={confirmPassword.value.trim().replaceAll(" ", "")}
-            autoComplete="new-password"
-            isValid={confirmPassword.isDirty && confirmPassword.isValid}
-            isInvalid={confirmPassword.isTouched && !confirmPassword.isValid}
-          />
-          {confirmPassword.isTouched && !confirmPassword.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {confirmPassword.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          className="w-100 py-2 fs-5 text-uppercase fw-semibold"
-        >
-          Register
-        </Button>
+      <Form className="shadow rounded-3 p-4 w-100" onSubmit={handleSubmit} noValidate>
+        <Row xs={1} md={2}>
+          <Form.Group as={Col} className="mb-3" controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="John Doe"
+              required
+              onChange={validateForm}
+              value={name.value}
+              autoFocus
+              autoComplete="name"
+              isValid={name.isDirty && name.isValid}
+              isInvalid={name.isTouched && !name.isValid}
+            />
+            {name.isTouched && !name.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {name.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group as={Col} className="mb-3" controlId="email">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="johndoe@example"
+              required
+              onChange={validateForm}
+              value={email.value}
+              autoComplete="email"
+              isValid={email.isDirty && email.isValid}
+              isInvalid={email.isTouched && !email.isValid}
+            />
+            {email.isTouched && !email.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {email.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group as={Col} className="mb-3" controlId="address">
+            <Form.Label>Address</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="456 Elm St, Example City, USA, 90210"
+              required
+              onChange={validateForm}
+              value={address.value}
+              autoComplete="address"
+              isValid={address.isDirty && address.isValid}
+              isInvalid={address.isTouched && !address.isValid}
+            />
+            {address.isTouched && !address.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {address.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group as={Col} className="mb-3" controlId="phone">
+            <Form.Label>Mobile Number</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="+20123456789"
+              required
+              onChange={validateForm}
+              value={phone.value}
+              autoComplete="phone"
+              isValid={phone.isDirty && phone.isValid}
+              isInvalid={phone.isTouched && !phone.isValid}
+            />
+            {phone.isTouched && !phone.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {phone.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group as={Col} className="mb-3" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              required
+              onChange={validateForm}
+              value={password.value.trim().replaceAll(" ", "")}
+              autoComplete="new-password"
+              isValid={password.isDirty && password.isValid}
+              isInvalid={password.isTouched && !password.isValid}
+            />
+            {password.isTouched && !password.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {password.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group as={Col} className="mb-3" controlId="confirmPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              required
+              onChange={validateForm}
+              value={confirmPassword.value.trim().replaceAll(" ", "")}
+              autoComplete="new-password"
+              isValid={confirmPassword.isDirty && confirmPassword.isValid}
+              isInvalid={confirmPassword.isTouched && !confirmPassword.isValid}
+            />
+            {confirmPassword.isTouched && !confirmPassword.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {confirmPassword.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+        </Row>
+        <div className="d-flex justify-content-center">
+          <Button
+            variant="primary"
+            type="submit"
+            className="w-100 py-2 fs-5 text-uppercase fw-semibold"
+            style={{maxWidth: "15rem"}}
+          >
+            Register
+          </Button>
+        </div>
 
         <hr />
 

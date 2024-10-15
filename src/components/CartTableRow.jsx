@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import useCartContext from "../contexts/CartContext";
 import styles from "./CartTableRow.module.css";
 
-export default function CartTableRow({ item, compactView = false }) {
+export default function CartTableRow({
+  item,
+  compactView = false,
+  closeCart = null,
+}) {
   const { updateCartQty, removeFromCart } = useCartContext();
 
   const {
@@ -70,6 +74,7 @@ export default function CartTableRow({ item, compactView = false }) {
         <Link
           to={`/products/${slug}`}
           className="text-decoration-none d-flex align-items-center gap-3"
+          onClick={closeCart ? () => closeCart() : undefined}
         >
           <Image
             src={image
