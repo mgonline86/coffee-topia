@@ -11,6 +11,7 @@ export const ProductListProvider = ({ children }) => {
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
   let currentPage = parseInt(searchParams.get("page")) || 1;
   const selectedBrands =
     searchParams.get("brands")?.split(",").filter(Boolean) || [];
@@ -22,17 +23,20 @@ export const ProductListProvider = ({ children }) => {
   const maxPriceFromQuery =
     parseInt(searchParams.get("maxPrice")) || maxProductPrice;
   const priceRange = [minPriceFromQuery, maxPriceFromQuery];
+  const hasDiscount = searchParams.get("discount") === "true";
 
   const handlePageChange = (page) => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", page);
     navigate(`?${newSearchParams.toString()}`);
+    window.scrollTo(0, 0);
   };
   const handleSearch = (event) => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.set("page", 1);
     newSearchParams.set("q", event.target.value);
     navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
   };
   const handlePriceMaxChange = (event) => {
     let newValue = parseInt(event.target.value);
@@ -40,11 +44,13 @@ export const ProductListProvider = ({ children }) => {
     if (!newValue) {
       newSearchParams.delete("maxPrice");
       navigate(`?${newSearchParams.toString()}`, { replace: true });
+      window.scrollTo(0, 0);
       return;
     }
     newSearchParams.set("page", 1);
     newSearchParams.set("maxPrice", newValue);
     navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
   };
 
   const handlePriceMinChange = (event) => {
@@ -53,11 +59,13 @@ export const ProductListProvider = ({ children }) => {
     if (!newValue) {
       newSearchParams.delete("minPrice");
       navigate(`?${newSearchParams.toString()}`, { replace: true });
+      window.scrollTo(0, 0);
       return;
     }
     newSearchParams.set("page", 1);
     newSearchParams.set("minPrice", newValue);
     navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
   };
 
   const handleSelectBrand = (entry) => {
@@ -68,6 +76,7 @@ export const ProductListProvider = ({ children }) => {
     }
     newSearchParams.set("brands", entry.map((entry) => entry.value).join(","));
     navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
   };
 
   const handleSelectTag = (entry) => {
@@ -78,7 +87,20 @@ export const ProductListProvider = ({ children }) => {
     }
     newSearchParams.set("tags", entry.map((entry) => entry.value).join(","));
     navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
   };
+
+  const handleToggleDiscount = () => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (hasDiscount) {
+      newSearchParams.delete("discount");
+    } else {
+      newSearchParams.set("discount", "true");
+    }
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
+  };
+
   const handleReset = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.delete("page");
@@ -88,6 +110,7 @@ export const ProductListProvider = ({ children }) => {
     newSearchParams.delete("minPrice");
     newSearchParams.delete("maxPrice");
     navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
   };
 
   let pagesCount = Math.ceil(products.length / productsPerPage);
@@ -134,6 +157,10 @@ export const ProductListProvider = ({ children }) => {
         });
       }
 
+      if (hasDiscount) {
+        productSlice = productSlice.filter((product) => product.discount > 0);
+      }
+
       pagesCount = Math.ceil(productSlice.length / productsPerPage);
       return productSlice.slice(
         (currentPage - 1) * productsPerPage,
@@ -153,6 +180,7 @@ export const ProductListProvider = ({ children }) => {
         handlePriceMinChange,
         handleSelectBrand,
         handleSelectTag,
+        handleToggleDiscount,
         handleReset,
         searchTerm,
         priceRange,
@@ -160,6 +188,9 @@ export const ProductListProvider = ({ children }) => {
         selectedTags,
         brands,
         tags,
+        maxProductPrice,
+        minProductPrice,
+        hasDiscount,
       }}
     >
       {children}

@@ -30,7 +30,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isLogged) {
-      toast.success("You are logged in", { position: "bottom-right" });
+      toast.success("You are logged in", { position: "bottom-center" });
       navigate("/");
     }
   }, [isLogged, navigate, toast]);

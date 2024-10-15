@@ -10,6 +10,7 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
     handlePriceMinChange,
     handleSelectBrand,
     handleSelectTag,
+    handleToggleDiscount,
     handleReset,
     selectedBrands,
     selectedTags,
@@ -19,6 +20,7 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
     tags,
     maxProductPrice,
     minProductPrice,
+    hasDiscount,
   } = useProductListContext();
 
   const handleSubmit = (e) => {
@@ -30,7 +32,13 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
 
   return (
     <Form className="d-flex flex-column" onSubmit={handleSubmit}>
-      <Button variant="link" onClick={handleReset} className="align-self-end p-0">Reset</Button>
+      <Button
+        variant="link"
+        onClick={handleReset}
+        className="align-self-end p-0"
+      >
+        Reset
+      </Button>
       <Form.Group controlId="productQuery">
         <Form.Label className="fs-6 fw-semibold">Search</Form.Label>
         <Form.Control
@@ -74,6 +82,14 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
             />
             <InputGroup.Text>EGP</InputGroup.Text>
           </InputGroup>
+          <Form.Check
+            type="switch"
+            className="mt-3"
+            id="discount"
+            label="Has Discount"
+            checked={hasDiscount}
+            onChange={handleToggleDiscount}
+          />
         </div>
       </Form.Group>
       <hr className="text-muted" />

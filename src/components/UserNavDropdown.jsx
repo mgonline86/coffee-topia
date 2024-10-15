@@ -11,15 +11,15 @@ export default function UserNavDropdown() {
   const handleLogout = async () => {
     try {
       await logout();
-      toast.success("Logout successful", { position: "bottom-right" });
+      toast.success("Logout successful", { position: "bottom-center" });
     } catch (error) {
-      toast.error("Logout failed", { position: "bottom-right" });
+      toast.error("Logout failed", { position: "bottom-center" });
     }
   };
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="link" id="dropdown-basic">
+      <Dropdown.Toggle variant="link" id="dropdown-basic" size="sm">
         {isLogged ? (
           <>
             {user?.image ? (
@@ -49,7 +49,7 @@ export default function UserNavDropdown() {
         )}
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu align="end">
         {isLogged ? (
           <>
             <Dropdown.Item as={Link} to={"/profile"}>

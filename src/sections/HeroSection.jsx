@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <Carousel indicators className={styles.heroCarousel}>
       {images.map((image) => (
-        <Carousel.Item key={image} as={Link} to={"/products"}>
+        <Carousel.Item key={image} as={Link} to={"/products?discount=true"}>
           <Image
             src={imagesPath + image + imgExt}
             alt={`Slide ${image}`}

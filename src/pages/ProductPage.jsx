@@ -50,14 +50,16 @@ export default function ProductPage() {
     <Container className="my-5">
       <PageTitle title={`${product.title} | Coffee Topia`} />
       <Row>
-        <Col xs={12} md={6}>
+        <Col xs={12} md={6} className="position-relative text-center text-md-start">
           <Image
             src={product.image}
-            width={400}
-            height={400}
+            width={500}
+            height={500}
             fluid
             alt={product.title}
             loading="eager"
+            className="position-sticky"
+            style={{ top: "7.5rem" }}
           />
         </Col>
         <Col xs={12} md={6} className="d-flex flex-column gap-4">
