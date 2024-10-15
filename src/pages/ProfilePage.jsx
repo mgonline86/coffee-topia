@@ -18,6 +18,10 @@ export default function ProfilePage() {
     }
   });
 
+  if (!user) {
+    return null;
+  }
+
   return (
     <Container>
       <Row>
