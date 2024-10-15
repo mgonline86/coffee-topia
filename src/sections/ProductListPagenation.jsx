@@ -1,5 +1,5 @@
 import { Pagination } from "react-bootstrap";
-import useProductListContext from "../contexts/productListContext";
+import useProductListContext from "../contexts/ProductListContext";
 
 export default function ProductListPagenation() {
   const { viewProducts, pagesCount, currentPage, handlePageChange } =

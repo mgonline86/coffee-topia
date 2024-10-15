@@ -1,4 +1,4 @@
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 import CartTableSection from "../sections/CartTableSection";
 import EmptyCartSection from "../sections/EmptyCartSection";
 

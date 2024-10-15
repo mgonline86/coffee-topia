@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import useProductListContext from "../contexts/productListContext";
+import useProductListContext from "../contexts/ProductListContext";
 import ProductCard from "../components/ProductCard";
 
 export default function ProductListView() {

@@ -1,7 +1,7 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CartTableRow from "../components/CartTableRow";
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 
 export default function CartTableSection() {
   const { cartLineItems, total } = useCartContext();

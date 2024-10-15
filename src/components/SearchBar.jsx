@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import ProductContext from "../contexts/productContext";
+import ProductContext from "../contexts/ProductContext";
 import { SearchIcon } from "lucide-react";
 
 export default function SearchBar({

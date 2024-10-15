@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import ProductContext from "../contexts/productContext";
+import ProductContext from "./ProductContext";
 
 const ProductListContext = createContext();
 

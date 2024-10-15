@@ -1,6 +1,6 @@
 import { FilterIcon } from "lucide-react";
 import { Button, Card, Col, Container, Offcanvas, Row } from "react-bootstrap";
-import { ProductListProvider } from "../contexts/productListContext";
+import { ProductListProvider } from "../contexts/ProductListContext";
 import ProductListPagenation from "../sections/ProductListPagenation";
 import ProductListView from "../sections/ProductListView";
 import ProductsFilter from "../sections/ProductsFilter";

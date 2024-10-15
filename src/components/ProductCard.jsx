@@ -3,7 +3,7 @@ import { Badge } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ product, index = null }) {

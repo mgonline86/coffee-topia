@@ -1,7 +1,7 @@
 import { CheckCircleIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
-import useCartContext from "../contexts/cartContext";
+import useCartContext from "../contexts/CartContext";
 
 export default function ThankYouSection({
   data: { name, email, address, phone, paymentMethod, cardNumber },
