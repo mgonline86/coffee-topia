@@ -38,7 +38,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(initialUser);
   const [users, setUsers] = useState([...dummyUsers, ...localUsers]);
   const [isLogged, setIsLogged] = useState(
-    JSON.stringify(initialUser) !== "{}" || JSON.stringify(localUsers) !== null
+    JSON.stringify(initialUser) !== "{}" ||
+      JSON.stringify(initialUser) !== '"null"'
   );
 
   async function hashPassword(password) {
