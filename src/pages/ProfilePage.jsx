@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import useAuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import styles from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
   const { user } = useAuthContext();
@@ -20,22 +21,23 @@ export default function ProfilePage() {
   return (
     <Container>
       <Row>
-        <Col xs={12} md={6} className="mt-4 mb-3">
+        <Col xs={12} md={6} className="mt-4 mb-3 d-flex justify-content-center">
           {user?.image ? (
             <Image
               className="rounded-5"
               xs={12}
               md={6}
-              width={500}
+              width={400}
               height={400}
               src={user.image}
               alt={user.name}
+              fluid
             />
           ) : (
             <SquareUser size={400} />
           )}
         </Col>
-        <Col xs={12} md={6} className="my-5">
+        <Col xs={12} md={6} className={`my-5 ${styles.textSize}`}>
           <p className="fs-4">
             {" "}
             <IdCard className="me-2" />
