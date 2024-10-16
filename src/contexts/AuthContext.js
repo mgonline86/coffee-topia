@@ -41,6 +41,10 @@ export const AuthProvider = ({ children }) => {
     JSON.stringify(initialUser) !== "{}" && initialUser !== null
   );
 
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
+  }, [users]);
+
   async function hashPassword(password) {
     const encoder = new TextEncoder();
     const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Generate a 16-byte salt
@@ -146,13 +150,36 @@ export const AuthProvider = ({ children }) => {
       phone,
       orders: [],
     };
-    // Add user to local storage
-    localStorage.setItem("users", JSON.stringify([...localUsers, newUser]));
-    setUsers([...users, newUser]);
+
+    const newUsers = [...users, newUser];
+
+    // Remove an old user for preview purposes
+    if (newUsers.length >= 10) {
+      newUsers.splice(2, 1);
+    }
+
+    // Add user to state and local storage
+    setUsers([...newUsers]);
+
+    // Remove password from user object
     const safeUser = { ...newUser };
     delete safeUser.password;
+
+    // Set user in state
     setUser(safeUser);
     setIsLogged(true);
+  };
+
+  const updateUserInUsers = (userData) => {
+    const updatedUsers = users.map((user) => {
+      if (user.id === userData.id) {
+        return { ...user, ...userData };
+      }
+      return user;
+    });
+
+    setUsers(updatedUsers);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   useEffect(() => {
@@ -168,6 +195,7 @@ export const AuthProvider = ({ children }) => {
     setIsLogged,
     users,
     setUsers,
+    updateUserInUsers,
     login,
     logout,
     register,

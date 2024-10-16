@@ -2,47 +2,41 @@ import { BanknoteIcon, CreditCardIcon } from "lucide-react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import ThankYouSection from "./ThankYouSection";
 import useAuthContext from "../contexts/AuthContext";
+import useCartContext from "../contexts/CartContext";
+import ThankYouSection from "./ThankYouSection";
+import ThankYouCard from "../components/ThankYouCard";
 
 export default function CheckoutFormSection({ closeSummary = null }) {
-  const { user } = useAuthContext();
-  let initialName = "";
-  let initialEmail = "";
-  let initialAddress = "";
-  let initialPhone = "";
-  if (user) {
-    initialName = user.name;
-    initialEmail = user.email;
-    initialAddress = user.address;
-    initialPhone = user.phone;
-  }
+  const { user, setUser, updateUserInUsers } = useAuthContext();
+  const { subTotal, totalDiscount, shipping, total, cartLineItems } =
+    useCartContext();
 
   // Define states
   const [showThankYou, setShowThankYou] = useState(false);
   const [name, setName] = useState({
-    value: initialName,
-    isValid: false,
-    isTouched: false,
-    isDirty: false,
+    value: user?.name || "",
+    isValid: user?.name ? true : false,
+    isTouched: user?.name ? true : false,
+    isDirty: user?.name ? true : false,
   });
   const [email, setEmail] = useState({
-    value: initialEmail,
-    isValid: false,
-    isTouched: false,
-    isDirty: false,
+    value: user?.email || "",
+    isValid: user?.email ? true : false,
+    isTouched: user?.email ? true : false,
+    isDirty: user?.email ? true : false,
   });
   const [address, setAddress] = useState({
-    value: initialAddress,
-    isValid: false,
-    isTouched: false,
-    isDirty: false,
+    value: user?.address || "",
+    isValid: user?.address ? true : false,
+    isTouched: user?.address ? true : false,
+    isDirty: user?.address ? true : false,
   });
   const [phone, setPhone] = useState({
-    value: initialPhone,
-    isValid: false,
-    isTouched: false,
-    isDirty: false,
+    value: user?.phone || "",
+    isValid: user?.phone ? true : false,
+    isTouched: user?.phone ? true : false,
+    isDirty: user?.phone ? true : false,
   });
   const [paymentMethod, setPaymentMethod] = useState("Cash On Delivery");
   const [cardNumber, setCardNumber] = useState({
@@ -152,7 +146,34 @@ export default function CheckoutFormSection({ closeSummary = null }) {
       cardNumber: cardNumber.value.replaceAll(" ", "").trim(),
     };
 
-    console.log("Form submitted successfully:\n", formData);
+    if (user) {
+      const oldOrders = [...user.orders];
+
+      // limit to 5 orders for preview purposes
+      if (oldOrders.length >= 5) {
+        oldOrders.shift();
+      }
+
+      delete formData.cardNumber;
+
+      const newOrder = {
+        id: `#${Date.now()}`,
+        date: Date(),
+        cartLineItems,
+        details: formData,
+        subTotal,
+        totalDiscount,
+        shipping,
+        total,
+      };
+
+      const updatedOrders = [newOrder, ...oldOrders];
+      setUser((prev) => {
+        return { ...prev, orders: updatedOrders };
+      });
+
+      updateUserInUsers({ ...user, orders: updatedOrders });
+    }
 
     setShowThankYou(true);
     if (closeSummary) closeSummary();
@@ -160,16 +181,18 @@ export default function CheckoutFormSection({ closeSummary = null }) {
 
   if (showThankYou) {
     return (
-      <ThankYouSection
-        data={{
-          name: name.value,
-          email: email.value,
-          address: address.value,
-          phone: phone.value,
-          paymentMethod,
-          cardNumber: cardNumber.value,
-        }}
-      />
+      <ThankYouSection>
+        <ThankYouCard
+          data={{
+            name: name.value,
+            email: email.value,
+            address: address.value,
+            phone: phone.value,
+            paymentMethod,
+            cardNumber: cardNumber.value,
+          }}
+        />
+      </ThankYouSection>
     );
   }
 
