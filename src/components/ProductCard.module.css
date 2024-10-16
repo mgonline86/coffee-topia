@@ -20,7 +20,8 @@
 
 @media screen and (max-width: 576px) {
   .productCard {
-    width: 8rem;
+    width: 100%;
+    max-width: 10rem;
   }
 
   .productCardBadge {

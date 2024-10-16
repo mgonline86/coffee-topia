@@ -60,3 +60,12 @@ To run Coffee Topia locally, follow these steps:
 ## Live Demo
 
 You can explore the live version of the Coffee Topia website here: [Coffee Topia](https://coffee-topia.vercel.app/)
+
+## Dummy Users Accounts
+
+- USER 01:
+  - email: user1@test.com
+  - password: Abc123#
+- USER 02:
+  - email: user2@test.com
+  - password: Abc123#

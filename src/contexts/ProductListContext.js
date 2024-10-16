@@ -24,6 +24,10 @@ export const ProductListProvider = ({ children }) => {
     parseInt(searchParams.get("maxPrice")) || maxProductPrice;
   const priceRange = [minPriceFromQuery, maxPriceFromQuery];
   const hasDiscount = searchParams.get("discount") === "true";
+  const sortByQuery = searchParams.get("sortBy");
+  const sortBy = ["price-asc", "price-desc", "a-z", "z-a"].includes(sortByQuery)
+    ? sortByQuery
+    : "a-z";
 
   const handlePageChange = (page) => {
     const newSearchParams = new URLSearchParams(searchParams);
@@ -101,6 +105,14 @@ export const ProductListProvider = ({ children }) => {
     window.scrollTo(0, 0);
   };
 
+  const handleSortBy = (entry) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    newSearchParams.set("page", 1);
+    newSearchParams.set("sortBy", entry.value);
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
+    window.scrollTo(0, 0);
+  };
+
   const handleReset = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.delete("page");
@@ -161,6 +173,25 @@ export const ProductListProvider = ({ children }) => {
         productSlice = productSlice.filter((product) => product.discount > 0);
       }
 
+      switch (sortBy) {
+        case "price-asc":
+          productSlice = productSlice.sort((a, b) => a.price - b.price);
+          break;
+        case "price-desc":
+          productSlice = productSlice.sort((a, b) => b.price - a.price);
+          break;
+        case "z-a":
+          productSlice = productSlice.sort((a, b) =>
+            b.title.localeCompare(a.title)
+          );
+          break;
+        default:
+          productSlice = productSlice.sort((a, b) =>
+            a.title.localeCompare(b.title)
+          );
+          break;
+      }
+
       pagesCount = Math.ceil(productSlice.length / productsPerPage);
       return productSlice.slice(
         (currentPage - 1) * productsPerPage,
@@ -181,6 +212,7 @@ export const ProductListProvider = ({ children }) => {
         handleSelectBrand,
         handleSelectTag,
         handleToggleDiscount,
+        handleSortBy,
         handleReset,
         searchTerm,
         priceRange,
@@ -191,6 +223,7 @@ export const ProductListProvider = ({ children }) => {
         maxProductPrice,
         minProductPrice,
         hasDiscount,
+        sortBy,
       }}
     >
       {children}

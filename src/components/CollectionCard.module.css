@@ -4,7 +4,8 @@
 
 @media screen and (max-width: 576px) {
   .collectionCard {
-    width: 8rem;
+    width: 100%;
+    max-width: 10rem;
   }
 
   .collectionCardImg {
