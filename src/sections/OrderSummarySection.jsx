@@ -1,11 +1,9 @@
 import { Stack } from "react-bootstrap";
 import OrderSummaryItem from "../components/OrderSummaryItem";
-import useCartContext from "../contexts/CartContext";
 
-export default function OrderSummarySection() {
-  const { cartLineItems, subTotal, totalDiscount, shipping, total } =
-    useCartContext();
-
+export default function OrderSummarySection({
+  data: { cartLineItems, subTotal, totalDiscount, shipping, total },
+}) {
   if (cartLineItems.length === 0) {
     return null;
   }

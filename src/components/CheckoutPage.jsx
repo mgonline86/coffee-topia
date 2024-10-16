@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 import CheckoutFormSection from "../sections/CheckoutFormSection";
 
 export default function CheckoutPage() {
-  const { total, cartLineItems } = useCartContext();
+  const { total, cartLineItems, subTotal, totalDiscount, shipping } =
+    useCartContext();
 
   const [open, setOpen] = useState(false);
 
@@ -51,7 +52,15 @@ export default function CheckoutPage() {
           </div>
           <Collapse in={open}>
             <div id="order-summary-collapse" className="py-3">
-              <OrderSummarySection />
+              <OrderSummarySection
+                data={{
+                  cartLineItems,
+                  subTotal,
+                  totalDiscount,
+                  shipping,
+                  total,
+                }}
+              />
             </div>
           </Collapse>
         </Col>
@@ -59,7 +68,9 @@ export default function CheckoutPage() {
           <CheckoutFormSection closeSummary={() => setOpen(false)} />
         </Col>
         <Col xs={12} lg={6} className="d-none d-lg-block">
-          <OrderSummarySection />
+          <OrderSummarySection
+            data={{ cartLineItems, subTotal, totalDiscount, shipping, total }}
+          />
         </Col>
       </Row>
     </Container>

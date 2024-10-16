@@ -6,18 +6,31 @@ import styles from "./HeroSection.module.css";
 const imagesPath = "img/carousel/";
 const imgExt = ".webp";
 
-const images = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const images = [
+  {
+    img: "1",
+    url: "/products?q=Dolce+Vita",
+  },
+  {
+    img: "2",
+    url: "/products?q=Lavazza",
+  },
+  {
+    img: "3",
+    url: "/products?brands=Nespresso+-+Daniel%27s",
+  },
+  {
+    img: "4",
+    url: "/products/bristot-nespresso-compatible-bundle-of-3",
+  },
+];
 
 export default function HeroSection() {
   return (
     <Carousel indicators className={styles.heroCarousel}>
-      {images.map((image) => (
-        <Carousel.Item key={image} as={Link} to={"/products?discount=true"}>
-          <Image
-            src={imagesPath + image + imgExt}
-            alt={`Slide ${image}`}
-            fluid
-          />
+      {images.map(({ img, url }) => (
+        <Carousel.Item key={img} as={Link} to={url}>
+          <Image src={imagesPath + img + imgExt} alt={`Slide ${img}`} fluid />
         </Carousel.Item>
       ))}
     </Carousel>

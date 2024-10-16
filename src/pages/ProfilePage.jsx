@@ -1,16 +1,58 @@
-import { IdCard, Mail, MapPinHouseIcon, Phone, User2Icon } from "lucide-react";
+import {
+  CheckCheckIcon,
+  HourglassIcon,
+  IdCard,
+  Mail,
+  MapPinHouseIcon,
+  Phone,
+  User2Icon,
+} from "lucide-react";
 import { useEffect } from "react";
+import { Badge, Table } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
+import OrderDetailsModal from "../components/OrderDetailsModal";
 import useAuthContext from "../contexts/AuthContext";
 import styles from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
   const { user } = useAuthContext();
   const navigate = useNavigate();
+
+  const orderStatus = (dateString) => {
+    const date = new Date(dateString);
+    const diffIs5Days = 5 * 24 * 60 * 60 * 1000;
+    if (date.getTime() < Date.now() - diffIs5Days) {
+      return (
+        <div className="d-flex">
+          <Badge
+            className="d-flex align-items-center justify-content-center"
+            bg="success"
+            pill
+          >
+            <CheckCheckIcon size={14} />
+            Fullfilled
+          </Badge>
+        </div>
+      );
+    }
+    return (
+      <div className="d-flex">
+        <Badge
+          className="d-flex align-items-center justify-content-center"
+          bg="warning"
+          text="dark"
+          pill
+        >
+          <HourglassIcon size={14} />
+          Pending
+        </Badge>
+      </div>
+    );
+  };
 
   useEffect(() => {
     if (!user) {
@@ -73,6 +115,46 @@ export default function ProfilePage() {
           </p>
         </Col>
       </Row>
+
+      {user?.orders.length > 0 && (
+        <Row className="my-5">
+          <Col>
+            <h2 className="text-center">Your Orders</h2>
+          </Col>
+
+          <Table responsive="md" size="sm" striped style={{verticalAlign: "middle"}}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {user?.orders.map((order) => {
+                return (
+                  <tr key={order.id}>
+                    <td>{order.id}</td>
+                    <td>{new Date(order.date).toLocaleDateString()}</td>
+                    <td>
+                      <div className="d-flex align-items-center flex-nowrap">
+                        <span className="me-1">EGP</span>
+                        {order.total.toFixed(2)}
+                      </div>
+                    </td>
+                    <td>{orderStatus(order.date)}</td>
+                    <td>
+                      <OrderDetailsModal order={order} />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Row>
+      )}
     </Container>
   );
 }
