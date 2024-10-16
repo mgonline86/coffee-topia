@@ -8,7 +8,7 @@ const FeaturedProducts = () => {
       <h1 className="text-center mb-4 fw-bolder fancyFont text-primary">Featured Products</h1>
       <Row className="g-4">
         {products.map((product) => (
-          <Col xs={6} sm key={product.title} className="text-center">
+          <Col xs={6} sm key={product.title} className="text-center px-2 px-lg-3">
             <ProductCard product={product} />
           </Col>
         ))}

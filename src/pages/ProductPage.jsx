@@ -1,19 +1,25 @@
-import { useContext, useState } from "react";
+import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import { useContext, useMemo, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useParams } from "react-router-dom";
+import PageTitle from "../components/PageTitle";
+import ProductCard from "../components/ProductCard";
 import useCartContext from "../contexts/CartContext";
 import ProductContext from "../contexts/ProductContext";
-import PageTitle from "../components/PageTitle";
 
 export default function ProductPage() {
   const { slug } = useParams();
-  const { getProductBySlug } = useContext(ProductContext);
+  const { getProductBySlug, getRelatedProducts } = useContext(ProductContext);
   const product = getProductBySlug(slug);
 
   const { updateCartQty, handleShowCart, maxQty } = useCartContext();
+
+  const relatedProducts = useMemo(() => {
+    return getRelatedProducts(product);
+  }, [product, getRelatedProducts]);
 
   // create state for qty
   const [qty, setQty] = useState(1);
@@ -124,6 +130,47 @@ export default function ProductPage() {
           <p dangerouslySetInnerHTML={{ __html: product.description }} />
         </Col>
       </Row>
+      {relatedProducts.length > 0 && (
+        <div className="my-5">
+          <h3 className="fw-bold fancyFont text-primary text-center">Related Products</h3>
+          <Splide
+            aria-label="Related Products"
+            hasTrack={false}
+            options={{
+              autoplay: true,
+              rewind: true,
+              perPage: 4,
+              perMove: 1,
+              pagination: false,
+              breakpoints: {
+                1200: {
+                  perPage: 3,
+                },
+                992: {
+                  perPage: 2,
+                },
+                768: {
+                  perPage: 1,
+                },
+                576: {
+                  perPage: 2,
+                },
+                368: {
+                  perPage: 1,
+                },
+              },
+            }}
+          >
+            <SplideTrack className="py-5">
+              {relatedProducts.map((product) => (
+                <SplideSlide key={product.title}>
+                  <ProductCard product={product} />
+                </SplideSlide>
+              ))}
+            </SplideTrack>
+          </Splide>
+        </div>
+      )}
     </Container>
   );
 }

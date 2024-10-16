@@ -5,6 +5,7 @@ import ProductListPagenation from "../sections/ProductListPagenation";
 import ProductListView from "../sections/ProductListView";
 import ProductsFilter from "../sections/ProductsFilter";
 import { useState } from "react";
+import SortBySelect from "../components/SortBySelect";
 
 export default function ProductListPageX() {
   const [show, setShow] = useState(false);
@@ -14,7 +15,7 @@ export default function ProductListPageX() {
   return (
     <ProductListProvider>
       <Container className="my-3 my-lg-4 my-xl-5">
-        <div>
+        <div className="d-flex align-items-center justify-content-between">
           <Button
             variant="outline-primary"
             className="border-0 my-2 d-xl-none d-flex align-items-center justify-content-center gap-1"
@@ -24,16 +25,22 @@ export default function ProductListPageX() {
           </Button>
           <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>
-                Filter
-              </Offcanvas.Title>
+              <Offcanvas.Title>Filter</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
               <ProductsFilter closeOffcanvas={handleClose} />
             </Offcanvas.Body>
           </Offcanvas>
-          <hr className="d-xl-none" />
+          <div className="d-xl-none">
+            <SortBySelect />
+          </div>
         </div>
+          <hr className="d-xl-none" />
+        <Row className="justify-content-end mb-3 d-none d-xl-flex">
+          <Col xl={3}>
+            <SortBySelect />
+          </Col>
+        </Row>
         <Row>
           <Col xl={3} className="d-none d-xl-block">
             <Card>

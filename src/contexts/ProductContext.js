@@ -10,6 +10,12 @@ export const ProductProvider = ({ children }) => {
   const maxProductPrice = Math.max(...products.map((product) => product.price));
   const minProductPrice = Math.min(...products.map((product) => product.price));
 
+  const getRelatedProducts = (product) => {
+    return products.filter(
+      (p) => p.brand === product.brand && p.id !== product.id
+    );
+  };
+
   const getProductBySlug = (slug) => {
     return products.find((product) => product.slug === slug);
   };
@@ -21,6 +27,7 @@ export const ProductProvider = ({ children }) => {
     maxProductPrice,
     minProductPrice,
     getProductBySlug,
+    getRelatedProducts,
   };
 
   return (

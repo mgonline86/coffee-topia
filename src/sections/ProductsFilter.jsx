@@ -107,6 +107,35 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
             label: brand,
           }))}
           inputId="brands"
+          styles={{
+            control: (styles) => ({
+              ...styles,
+              backgroundColor: "white",
+              borderColor: "var(--bs-primary)",
+              "&:hover": {
+                borderColor: "var(--bs-primary)",
+              },
+              boxShadow: "0 0 0 1px var(--bs-primary)",
+            }),
+            option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+              return {
+                ...styles,
+                backgroundColor: isDisabled
+                  ? undefined
+                  : isSelected
+                  ? "var(--bs-primary)"
+                  : isFocused
+                  ? "#eee"
+                  : undefined,
+                color: isDisabled
+                  ? "#ccc"
+                  : isSelected
+                  ? "white"
+                  : "var(--bs-primary)",
+                cursor: isDisabled ? "not-allowed" : "default",
+              };
+            },
+          }}
         />
       </Form.Group>
       <hr className="text-muted" />
@@ -124,6 +153,35 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
             label: tag,
           }))}
           inputId="tags"
+          styles={{
+            control: (styles) => ({
+              ...styles,
+              backgroundColor: "white",
+              borderColor: "var(--bs-primary)",
+              "&:hover": {
+                borderColor: "var(--bs-primary)",
+              },
+              boxShadow: "0 0 0 1px var(--bs-primary)",
+            }),
+            option: (styles, { isDisabled, isFocused, isSelected }) => {
+              return {
+                ...styles,
+                backgroundColor: isDisabled
+                  ? undefined
+                  : isSelected
+                  ? "var(--bs-primary)"
+                  : isFocused
+                  ? "#eee"
+                  : undefined,
+                color: isDisabled
+                  ? "#ccc"
+                  : isSelected
+                  ? "white"
+                  : "var(--bs-primary)",
+                cursor: isDisabled ? "not-allowed" : "default",
+              };
+            },
+          }}
         />
       </Form.Group>
       <hr className="text-muted d-lg-none" />

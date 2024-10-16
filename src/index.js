@@ -1,11 +1,12 @@
+import "@splidejs/react-splide/css";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import "./fonts/DarlingCoffee.woff";
 import "./fonts/DarlingCoffee.woff2";
 import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
-import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
