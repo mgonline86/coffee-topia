@@ -29,10 +29,15 @@ export default function CartTableSection() {
             <CartTableRow key={item.product.id} item={item} />
           ))}
           <Row>
-            <Col className="fw-bold text-end fs-5" xs sm={8} md={9} lg={10}>
+            <Col className="fw-bold text-end fs-5">
               Total:
             </Col>
-            <Col className="fw-bold text-end fs-5">EGP {total.toFixed(2)}</Col>
+            <Col xs="auto" className="fw-bold text-end fs-5">EGP {total.toFixed(2)}</Col>
+          <Col xs={12}>
+            <p className="m-0 text-end" style={{ fontSize: "0.8rem" }}>
+              *Shipping and taxes calculated at checkout
+            </p>
+          </Col>
           </Row>
           <Row className="mt-4">
             <Col className="d-flex justify-content-center justify-content-lg-end">

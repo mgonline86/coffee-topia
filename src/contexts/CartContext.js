@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import useToastContext from "./ToastContext";
 
 const CartContext = createContext();
@@ -29,30 +36,12 @@ export const CartProvider = ({ children }) => {
     [cartLineItems]
   );
 
-  const addToCart = (product, newQty = 1) => {
-    const strId = String(product.id);
-    if (cart[strId]) {
-      // if max qty reached
-      const currentQty = cart[strId]?.qty || 0;
-      if (newQty + currentQty > maxQty) {
-        setCart((prev) => ({
-          ...prev,
-          [strId]: { ...prev[strId], qty: maxQty },
-        }));
-        toast.error("Max quantity reached", { position: "bottom-center" });
-        return;
-      }
-      setCart((prev) => ({
-        ...prev,
-        [strId]: { ...prev[strId], qty: prev[strId].qty + newQty },
-      }));
-    } else {
-      setCart((prev) => ({
-        ...prev,
-        [strId]: { product, qty: newQty, timestamp: Date.now() },
-      }));
-    }
-  };
+  const currentQty = useCallback(
+    (productId) => {
+      return cart[String(productId)]?.qty || 0;
+    },
+    [cart]
+  );
 
   const removeFromCart = (id) => {
     const strId = String(id);
@@ -64,23 +53,21 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const updateCartQty = (productId, qty) => {
-    const strId = String(productId);
+  const updateCartQty = (product, qty=1) => {
+    // if qty is less than 1 exit
+    const strId = String(product.id);
     if (qty < 1) {
       return;
     }
 
-    if (cart[strId]) {
-      // if max qty reached
-      if (qty > maxQty) {
-        setCart((prev) => ({
-          ...prev,
-          [strId]: { ...prev[strId], qty: maxQty },
-        }));
-        toast.error("Max quantity reached", { position: "bottom-center" });
-        return;
-      }
+    // if max qty reached
+    const oldQty = currentQty(strId);
+    if (qty + oldQty > maxQty) {
+      qty = maxQty;
+      toast.info(`Max quantity is ${maxQty} per product`);
+    }
 
+    if (cart[strId]) {
       setCart((prev) => ({
         ...prev,
         [strId]: { ...prev[strId], qty },
@@ -88,7 +75,7 @@ export const CartProvider = ({ children }) => {
     } else {
       setCart((prev) => ({
         ...prev,
-        [strId]: { ...prev[strId], qty },
+        [strId]: { product, qty, timestamp: Date.now() },
       }));
     }
   };
@@ -97,11 +84,14 @@ export const CartProvider = ({ children }) => {
     let subTotal = 0;
     let discount = 0;
     let total = 0;
-    let shipping = 10;
-    cartLineItems.forEach((item) => {
-      subTotal += item.product.price * item.qty;
-      discount += item.product.discount * item.product.price * item.qty;
-    });
+    let shipping = 0;
+    if (cartLineItems.length > 0) {
+      shipping = 10;
+      cartLineItems.forEach((item) => {
+        subTotal += item.product.price * item.qty;
+        discount += item.product.discount * item.product.price * item.qty;
+      });
+    }
     total = subTotal - discount + shipping;
     return [subTotal, discount, shipping, total];
   }, [cartLineItems]);
@@ -110,9 +100,8 @@ export const CartProvider = ({ children }) => {
     cart,
     setCart,
     cartLineItems,
-    addToCart,
-    removeFromCart,
     updateCartQty,
+    removeFromCart,
     showCart,
     handleCloseCart,
     handleShowCart,
@@ -121,6 +110,7 @@ export const CartProvider = ({ children }) => {
     totalDiscount,
     shipping,
     total,
+    maxQty,
   };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

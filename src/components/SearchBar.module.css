@@ -1,0 +1,14 @@
+.searchForm {
+  max-width: 30rem;
+}
+
+.listGroup {
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.searchImg {
+  object-fit: cover;
+  object-position: center;
+  min-width: 3.75rem;
+}

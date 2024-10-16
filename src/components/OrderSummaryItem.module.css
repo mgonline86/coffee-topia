@@ -1,0 +1,11 @@
+.orderSummaryImg {
+  object-fit: "cover";
+  object-position: "center";
+  min-width: 3.75rem;
+  width: 3.75rem;
+  height: 3.75rem;
+}
+
+.totalConatiner {
+  min-width: fit-content;
+}

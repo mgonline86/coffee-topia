@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import ProductContext from "../contexts/ProductContext";
 import { SearchIcon } from "lucide-react";
+import styles from "./SearchBar.module.css";
 
 export default function SearchBar({
   name = "search",
@@ -54,8 +55,7 @@ export default function SearchBar({
 
   return (
     <Form
-      className="d-flex flex-column position-relative w-100"
-      style={{ maxWidth: "30rem" }}
+      className={`d-flex flex-column position-relative w-100 ${styles.searchForm}`}
       onSubmit={handleFormSubmit}
     >
       <InputGroup className="me-2">
@@ -84,7 +84,7 @@ export default function SearchBar({
             } results`}</Card.Title>
           </Card.Header>
           <Card.Body>
-            <ListGroup style={{ maxHeight: "20rem", overflowY: "auto" }}>
+            <ListGroup className={styles.listGroup}>
               {filteredProducts(searchTerm).length === 0 ? (
                 <p>No results found</p>
               ) : (
@@ -99,15 +99,14 @@ export default function SearchBar({
                     <div className="d-flex gap-3 align-items-center">
                       <div>
                         <Image
-                          src={image}
+                          src={image
+                            .replaceAll(".jpg", "_x200.jpg")
+                            .replaceAll(".png", "_x200.png")
+                            .replaceAll(".webp", "_x200.webp")}
                           thumbnail
                           width={60}
                           height={60}
-                          style={{
-                            objectFit: "cover",
-                            objectPosition: "center",
-                            minWidth: 60,
-                          }}
+                          className={styles.searchImg}
                           alt={title}
                           loading="lazy"
                         />

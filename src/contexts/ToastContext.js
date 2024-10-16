@@ -7,7 +7,7 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={{ toast: toast }}>
       {children}
-      <ToastContainer />
+      <ToastContainer stacked hideProgressBar position="bottom-center" />
     </ToastContext.Provider>
   );
 };

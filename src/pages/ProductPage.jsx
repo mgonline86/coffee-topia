@@ -13,15 +13,20 @@ export default function ProductPage() {
   const { getProductBySlug } = useContext(ProductContext);
   const product = getProductBySlug(slug);
 
-  // import addToCart from cartContext
-  const { addToCart, handleShowCart } = useCartContext();
+  const { updateCartQty, handleShowCart, maxQty } = useCartContext();
 
   // create state for qty
   const [qty, setQty] = useState(1);
 
   // handle input change
   const handleQuantityChange = (event) => {
-    const newQty = parseInt(event.target.value);
+    let newQty = parseInt(event.target.value);
+    if (newQty < 1) {
+      newQty = 1;
+    }
+    if (newQty > maxQty) {
+      newQty = maxQty;
+    }
     setQty(newQty);
   };
 
@@ -38,8 +43,9 @@ export default function ProductPage() {
   };
 
   // handle add to cart
-  const handleAddToCart = () => {
-    addToCart(product, qty);
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    updateCartQty(product, qty);
     handleShowCart();
   };
 
@@ -50,7 +56,11 @@ export default function ProductPage() {
     <Container className="my-5">
       <PageTitle title={`${product.title} | Coffee Topia`} />
       <Row>
-        <Col xs={12} md={6} className="position-relative text-center text-md-start">
+        <Col
+          xs={12}
+          md={6}
+          className="position-relative text-center text-md-start"
+        >
           <Image
             src={product.image}
             width={500}
@@ -65,7 +75,7 @@ export default function ProductPage() {
         <Col xs={12} md={6} className="d-flex flex-column gap-4">
           <h1 className="text-primary fw-bolder">{product.title}</h1>
           <h3 className="fw-bold">EGP {product.price} </h3>
-          <Row>
+          <Row as={Form} onSubmit={handleAddToCart}>
             <Col xs={12} md={4} className="mb-3 mb-md-0">
               <InputGroup className="h-100">
                 <Button
@@ -84,13 +94,13 @@ export default function ProductPage() {
                   onChange={handleQuantityChange}
                   step={1}
                   min={1}
-                  max={99}
+                  max={maxQty}
                 />
                 <Button
                   variant="outline-secondary"
                   id="button-addon1"
                   onClick={incrementQty}
-                  disabled={qty >= 99}
+                  disabled={qty >= maxQty}
                 >
                   +
                 </Button>
@@ -102,7 +112,7 @@ export default function ProductPage() {
                 variant="primary"
                 size="lg"
                 className="w-100"
-                onClick={handleAddToCart}
+                type="submit"
               >
                 Add to cart
               </Button>
