@@ -124,7 +124,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   const login = (user) => {
-    setUser(user);
+    const safeUser = { ...user };
+    delete safeUser.password;
+    setUser(safeUser);
     setIsLogged(true);
   };
 
@@ -147,7 +149,9 @@ export const AuthProvider = ({ children }) => {
     // Add user to local storage
     localStorage.setItem("users", JSON.stringify([...localUsers, newUser]));
     setUsers([...users, newUser]);
-    setUser(newUser);
+    const safeUser = { ...newUser };
+    delete safeUser.password;
+    setUser(safeUser);
     setIsLogged(true);
   };
 

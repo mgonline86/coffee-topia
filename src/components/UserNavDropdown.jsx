@@ -33,7 +33,7 @@ export default function UserNavDropdown() {
               <>
                 {user?.name ? (
                   <span
-                    className="d-inline-block fw-semibold rounded-circle border border-2 border-primary text-primary text-uppercase"
+                    className="d-inline-flex align-items-center justify-content-center fw-semibold rounded-circle border border-2 border-primary text-primary text-uppercase"
                     style={{ width: 30, height: 30 }}
                   >
                     {user.name.slice(0, 1)}

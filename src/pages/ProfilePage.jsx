@@ -1,11 +1,11 @@
-import { IdCard, Mail, MapPinHouseIcon, Phone, SquareUser } from "lucide-react";
+import { IdCard, Mail, MapPinHouseIcon, Phone, User2Icon } from "lucide-react";
+import { useEffect } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
-import useAuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import useAuthContext from "../contexts/AuthContext";
 import styles from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
@@ -25,7 +25,11 @@ export default function ProfilePage() {
   return (
     <Container>
       <Row>
-        <Col xs={12} md={6} className="mt-4 mb-3 d-flex justify-content-center">
+        <Col
+          xs={12}
+          md={6}
+          className="mt-4 mb-3 d-flex justify-content-md-center"
+        >
           {user?.image ? (
             <Image
               className="rounded-5"
@@ -38,30 +42,31 @@ export default function ProfilePage() {
               fluid
             />
           ) : (
-            <SquareUser size={400} />
+            <User2Icon
+              size={400}
+              strokeWidth={0.25}
+              className="img-fluid border border-3 border-dark rounded-5"
+              style={{ objectFit: "contain" }}
+            />
           )}
         </Col>
-        <Col xs={12} md={6} className={`my-5 ${styles.textSize}`}>
+        <Col xs={12} md={6} className={`my-3 my-md-5 ${styles.textSize}`}>
           <p className="fs-4">
-            {" "}
             <IdCard className="me-2" />
             <span className="fw-bold me-2">Name:</span>
             {user.name}
           </p>
           <p className="fs-4">
-            {" "}
             <Mail className="me-2" />
             <span className="fw-bold me-2">Email:</span>
             {user.email}
           </p>
           <p className="fs-4">
-            {" "}
             <Phone className="me-2" />
             <span className="fw-bold me-2">Phone:</span>
             {user.phone}
           </p>
           <p className="fs-4">
-            {" "}
             <MapPinHouseIcon className="me-2" />
             <span className="fw-bold me-2">Address:</span>
             {user.address}

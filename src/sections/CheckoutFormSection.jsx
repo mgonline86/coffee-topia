@@ -3,30 +3,43 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ThankYouSection from "./ThankYouSection";
+import useAuthContext from "../contexts/AuthContext";
 
 export default function CheckoutFormSection({ closeSummary = null }) {
+  const { user } = useAuthContext();
+  let initialName = "";
+  let initialEmail = "";
+  let initialAddress = "";
+  let initialPhone = "";
+  if (user) {
+    initialName = user.name;
+    initialEmail = user.email;
+    initialAddress = user.address;
+    initialPhone = user.phone;
+  }
+
   // Define states
   const [showThankYou, setShowThankYou] = useState(false);
   const [name, setName] = useState({
-    value: "",
+    value: initialName,
     isValid: false,
     isTouched: false,
     isDirty: false,
   });
   const [email, setEmail] = useState({
-    value: "",
+    value: initialEmail,
     isValid: false,
     isTouched: false,
     isDirty: false,
   });
   const [address, setAddress] = useState({
-    value: "",
+    value: initialAddress,
     isValid: false,
     isTouched: false,
     isDirty: false,
   });
   const [phone, setPhone] = useState({
-    value: "",
+    value: initialPhone,
     isValid: false,
     isTouched: false,
     isDirty: false,
