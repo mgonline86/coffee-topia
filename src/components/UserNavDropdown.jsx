@@ -11,9 +11,9 @@ export default function UserNavDropdown() {
   const handleLogout = async () => {
     try {
       await logout();
-      toast.success("Logout successful", { position: "bottom-center" });
+      toast.success("Logout successful");
     } catch (error) {
-      toast.error("Logout failed", { position: "bottom-center" });
+      toast.error("Logout failed");
     }
   };
 

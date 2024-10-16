@@ -7,7 +7,7 @@ import useCartContext from "../contexts/CartContext";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ product, index = null }) {
-  const { addToCart, handleShowCart } = useCartContext();
+  const { handleShowCart, updateCartQty } = useCartContext();
   const { title, price, image, slug } = product;
   return (
     <Card
@@ -67,7 +67,7 @@ export default function ProductCard({ product, index = null }) {
             variant="primary"
             className={`w-100 text-uppercase d-flex align-items-center justify-content-center gap-2 py-1 py-sm-2 ${styles.productCardBtn}`}
             onClick={() => {
-              addToCart(product);
+              updateCartQty(product);
               handleShowCart();
             }}
           >

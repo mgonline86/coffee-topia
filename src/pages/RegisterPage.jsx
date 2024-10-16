@@ -56,7 +56,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (isLogged) {
-      toast.success("You are logged in", { position: "bottom-center" });
+      toast.success("You are logged in");
       navigate("/");
     }
   }, [isLogged, navigate, toast]);
@@ -189,7 +189,11 @@ export default function RegisterPage() {
   return (
     <Container className="my-5" style={{ maxWidth: "60rem" }}>
       <h2 className="text-center mb-4">Register</h2>
-      <Form className="shadow rounded-3 p-4 w-100" onSubmit={handleSubmit} noValidate>
+      <Form
+        className="shadow rounded-3 p-4 w-100"
+        onSubmit={handleSubmit}
+        noValidate
+      >
         <Row xs={1} md={2}>
           <Form.Group as={Col} className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
@@ -306,7 +310,7 @@ export default function RegisterPage() {
             variant="primary"
             type="submit"
             className="w-100 py-2 fs-5 text-uppercase fw-semibold"
-            style={{maxWidth: "15rem"}}
+            style={{ maxWidth: "15rem" }}
           >
             Register
           </Button>

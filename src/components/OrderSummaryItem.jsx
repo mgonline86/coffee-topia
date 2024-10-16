@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Badge, Image } from "react-bootstrap";
+import styles from "./OrderSummaryItem.module.css";
 
 export default function OrderSummaryItem({ item }) {
   const { product, qty } = item;
@@ -39,20 +40,13 @@ export default function OrderSummaryItem({ item }) {
           thumbnail
           width={60}
           height={60}
-          style={{
-            objectFit: "cover",
-            objectPosition: "center",
-            minWidth: 60,
-          }}
+          className={styles.orderSummaryImg}
           alt={title}
           loading="lazy"
         />
       </div>
       <p className="m-0">{title}</p>
-      <div
-        className="flex-grow-1"
-        style={{ textAlign: "end", minWidth: "fit-content" }}
-      >
+      <div className={`flex-grow-1 text-end ${styles.totalConatiner}`}>
         <span>{viewTotal} </span>
       </div>
     </div>

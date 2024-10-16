@@ -10,24 +10,23 @@ export default function CartTableRow({
   compactView = false,
   closeCart = null,
 }) {
-  const { updateCartQty, removeFromCart } = useCartContext();
+  const { updateCartQty, removeFromCart, maxQty } = useCartContext();
 
-  const {
-    product: { id, image, title, discount, price, slug },
-    qty,
-  } = item;
+  const { product, qty } = item;
+
+  const { id, image, title, discount, price, slug } = product;
 
   const validateQty = useCallback(
-    (e, id) => {
+    (e) => {
       if (e.target.value < 1) {
-        updateCartQty(id, 1);
+        updateCartQty(product, 1);
       }
 
-      if (e.target.value > 99) {
-        updateCartQty(id, 99);
+      if (e.target.value > maxQty) {
+        updateCartQty(product, maxQty);
       }
     },
-    [updateCartQty]
+    [updateCartQty, product, maxQty]
   );
 
   const viewTotal = useMemo(() => {
@@ -35,9 +34,9 @@ export default function CartTableRow({
 
     if (discount && discount > 0) {
       return (
-        <div className="d-flex flex-column align-items-end justify-content-end gap-1">
+        <div className="d-flex flex-column align-items-lg-end justify-content-lg-end gap-1">
           <span>EGP {((1 - discount) * price * qty).toFixed(2)}</span>
-          <span className="text-decoration-line-through text-muted oldPrice">
+          <span className="text-decoration-line-through text-muted oldPrice text-start">
             EGP {(price * qty).toFixed(2)}
           </span>
         </div>
@@ -51,9 +50,9 @@ export default function CartTableRow({
 
     if (discount && discount > 0) {
       return (
-        <div className="d-flex flex-column align-items-end justify-content-end gap-1">
+        <div className="d-flex flex-column align-items-lg-end justify-content-lg-end gap-1">
           <span>EGP {((1 - discount) * price).toFixed(2)}</span>
-          <span className="text-decoration-line-through text-muted oldPrice">
+          <span className="text-decoration-line-through text-muted oldPrice text-start">
             EGP {price.toFixed(2)}
           </span>
         </div>
@@ -67,8 +66,8 @@ export default function CartTableRow({
       <Col
         xs={12}
         lg={compactView ? undefined : 5}
-        className={`border-end my-2 ${
-          compactView ? "border-end-0" : styles.borderEndXsNone
+        className={`my-2 ${
+          compactView ? "border-end-0" : styles.borderEnd
         }${compactView ? "" : " my-lg-0"}`}
       >
         <Link
@@ -86,7 +85,7 @@ export default function CartTableRow({
             width={100}
             height={100}
             alt={title}
-            style={{ objectFit: "contain" }}
+            className={styles.cartRowImg}
             loading="lazy"
           />
           {title}
@@ -95,8 +94,8 @@ export default function CartTableRow({
       <Col
         xs={12}
         lg={compactView ? undefined : true}
-        className={`border-end text-end d-flex mb-2 ${
-          compactView ? "border-end-0" : styles.borderEndXsNone
+        className={`text-end d-flex mb-2 ${
+          compactView ? "border-end-0" : styles.borderEnd
         }${
           compactView
             ? ""
@@ -111,8 +110,8 @@ export default function CartTableRow({
       <Col
         xs={9}
         lg={compactView ? undefined : true}
-        className={`border-end text-end d-flex align-items-center mb-2 ${
-          compactView ? "border-end-0" : styles.borderEndXsNone
+        className={`text-end d-flex align-items-center mb-2 ${
+          compactView ? "border-end-0" : styles.borderEnd
         }${compactView ? "" : " mb-lg-0 justify-content-lg-end"}`}
       >
         <span className={`me-2 fw-bold${compactView ? "" : " d-lg-none"}`}>
@@ -124,7 +123,7 @@ export default function CartTableRow({
         >
           <Button
             variant="outline-secondary"
-            onClick={() => updateCartQty(id, qty - 1)}
+            onClick={() => updateCartQty(product, qty - 1)}
             disabled={qty < 2}
           >
             -
@@ -132,16 +131,16 @@ export default function CartTableRow({
           <Form.Control
             type="number"
             value={qty}
-            onChange={(e) => updateCartQty(id, Number(e.target.value))}
+            onChange={(e) => updateCartQty(product, Number(e.target.value))}
             min={1}
-            max={99}
-            onBlur={(e) => validateQty(e, id)}
-            style={{ textAlign: "center", maxWidth: 60 }}
+            max={maxQty}
+            onBlur={(e) => validateQty(e)}
+            className={`text-center ${styles.qtyInput}`}
             name="qty"
           />
           <Button
             variant="outline-secondary"
-            onClick={() => updateCartQty(id, qty + 1)}
+            onClick={() => updateCartQty(product, qty + 1)}
             disabled={qty > 98}
           >
             +
@@ -151,8 +150,8 @@ export default function CartTableRow({
       <Col
         xs={12}
         lg={compactView ? undefined : true}
-        className={`border-end text-end d-flex order-1 ${
-          compactView ? "border-end-0" : styles.borderEndXsNone
+        className={`text-end d-flex order-1 ${
+          compactView ? "border-end-0" : styles.borderEnd
         }${
           compactView
             ? ""

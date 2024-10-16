@@ -1,5 +1,18 @@
+.cartRowImg {
+  object-fit: contain;
+}
+
+.qtyInput {
+  max-width: 3.75rem;
+}
+
+.borderEnd {
+  border-right: var(--bs-border-width) var(--bs-border-style)
+    var(--bs-border-color) !important;
+}
+
 @media screen and (max-width: 991px) {
-  .borderEndXsNone {
+  .borderEnd {
     border-right: 0 !important;
   }
 }
