@@ -67,7 +67,7 @@ export default function CheckoutPage() {
         <Col xs={12} lg={6}>
           <CheckoutFormSection closeSummary={() => setOpen(false)} />
         </Col>
-        <Col xs={12} lg={6} className="d-none d-lg-block">
+        <Col xs={12} lg={6} className="d-none d-lg-block position-relative">
           <OrderSummarySection
             data={{ cartLineItems, subTotal, totalDiscount, shipping, total }}
           />

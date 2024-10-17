@@ -1,11 +1,12 @@
 import { BanknoteIcon, CreditCardIcon } from "lucide-react";
 import { useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import ThankYouCard from "../components/ThankYouCard";
 import useAuthContext from "../contexts/AuthContext";
 import useCartContext from "../contexts/CartContext";
 import ThankYouSection from "./ThankYouSection";
-import ThankYouCard from "../components/ThankYouCard";
 
 export default function CheckoutFormSection({ closeSummary = null }) {
   const { user, setUser, updateUserInUsers } = useAuthContext();
@@ -45,6 +46,24 @@ export default function CheckoutFormSection({ closeSummary = null }) {
     isTouched: false,
     isDirty: false,
   });
+  const [cardCVV, setCardCVV] = useState({
+    value: "",
+    isValid: false,
+    isTouched: false,
+    isDirty: false,
+  });
+  const [cardExpiry, setCardExpiry] = useState({
+    value: "",
+    isValid: false,
+    isTouched: false,
+    isDirty: false,
+  });
+  const [cardName, setCardName] = useState({
+    value: "",
+    isValid: false,
+    isTouched: false,
+    isDirty: false,
+  });
 
   // Define state setters
   const setters = {
@@ -64,6 +83,9 @@ export default function CheckoutFormSection({ closeSummary = null }) {
       }
       return setCardNumber((prev) => ({ ...prev, ...newState }));
     },
+    cardCVV: setCardCVV,
+    cardExpiry: setCardExpiry,
+    cardName: setCardName,
   };
 
   // Define validations
@@ -77,6 +99,18 @@ export default function CheckoutFormSection({ closeSummary = null }) {
       const processedValue = value.trim().slice(0, 19).replaceAll(" ", ""); // Remove whitespace and limit to 16 digits
       return /^\d{16}$/.test(processedValue); // Valid card number format
     },
+    cardCVV: (value) => /^\d{3,4}$/.test(value.trim()), // Valid CVV format
+    cardExpiry: (value) => {
+      try {
+        const processedValue =
+          "20" + value.trim().split("/").reverse().join("-"); // Add 20 to the year
+        return new Date(processedValue) > new Date(); // Check if expiry date is in the future
+      } catch (error) {
+        console.log("Invalid date format");
+        return false;
+      }
+    },
+    cardName: (value) => value.trim().length > 2, // Minimum 3 characters
   };
 
   // Validate form
@@ -104,6 +138,9 @@ export default function CheckoutFormSection({ closeSummary = null }) {
     ];
     if (paymentMethod === "Credit Card") {
       formValidations.push(cardNumber.isValid);
+      formValidations.push(cardCVV.isValid);
+      formValidations.push(cardExpiry.isValid);
+      formValidations.push(cardName.isValid);
     }
     const isFormValid = formValidations.every((valid) => valid);
     if (!isFormValid) {
@@ -129,6 +166,18 @@ export default function CheckoutFormSection({ closeSummary = null }) {
       }));
       if (paymentMethod === "Credit Card") {
         setCardNumber((prev) => ({
+          ...prev,
+          isTouched: true,
+        }));
+        setCardCVV((prev) => ({
+          ...prev,
+          isTouched: true,
+        }));
+        setCardExpiry((prev) => ({
+          ...prev,
+          isTouched: true,
+        }));
+        setCardName((prev) => ({
           ...prev,
           isTouched: true,
         }));
@@ -314,29 +363,91 @@ export default function CheckoutFormSection({ closeSummary = null }) {
       </Form.Group>
 
       {paymentMethod === "Credit Card" && (
-        <Form.Group className="mb-3" controlId="cardNumber">
-          <Form.Label>Card Number</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="1234 5678 9012 3456"
-            required
-            onChange={validateForm}
-            value={
-              cardNumber.value
-                ?.slice(0, 19)
-                ?.match(/\d{1,4}/g)
-                ?.join(" ") || ""
-            }
-            autoComplete="cc-number"
-            isValid={cardNumber.isDirty && cardNumber.isValid}
-            isInvalid={cardNumber.isTouched && !cardNumber.isValid}
-          />
-          {cardNumber.isTouched && !cardNumber.isValid && (
-            <Form.Control.Feedback type="invalid">
-              Invalid card number
-            </Form.Control.Feedback>
-          )}
-        </Form.Group>
+        <Row>
+          <Form.Group className="mb-3" controlId="cardNumber" as={Col} xs={12}>
+            <Form.Label>Card Number</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="1234 5678 9012 3456"
+              required
+              onChange={validateForm}
+              value={
+                cardNumber.value
+                  ?.slice(0, 19)
+                  ?.match(/\d{1,4}/g)
+                  ?.join(" ") || ""
+              }
+              autoComplete="cc-number"
+              isValid={cardNumber.isDirty && cardNumber.isValid}
+              isInvalid={cardNumber.isTouched && !cardNumber.isValid}
+            />
+            {cardNumber.isTouched && !cardNumber.isValid && (
+              <Form.Control.Feedback type="invalid">
+                Invalid card number
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="cardExpiry" as={Col} md={6}>
+            <Form.Label>Card Expiry</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="MM/YY"
+              required
+              onChange={validateForm}
+              value={
+                cardExpiry.value
+                  ?.slice(0, 5)
+                  ?.match(/\d{1,2}/g)
+                  ?.join("/") || ""
+              }
+              autoComplete="cc-exp"
+              isValid={cardExpiry.isDirty && cardExpiry.isValid}
+              isInvalid={cardExpiry.isTouched && !cardExpiry.isValid}
+            />
+            {cardExpiry.isTouched && !cardExpiry.isValid && (
+              <Form.Control.Feedback type="invalid">
+                Invalid card expiry
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="cardCVV" as={Col} md={6}>
+            <Form.Label>Card CVV</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="123"
+              required
+              onChange={validateForm}
+              value={cardCVV.value}
+              autoComplete="cc-csc"
+              isValid={cardCVV.isDirty && cardCVV.isValid}
+              isInvalid={cardCVV.isTouched && !cardCVV.isValid}
+            />
+            {cardCVV.isTouched && !cardCVV.isValid && (
+              <Form.Control.Feedback type="invalid">
+                Invalid card CVV
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="cardName" as={Col} xs={12}>
+            <Form.Label>Card Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="John Doe"
+              required
+              onChange={validateForm}
+              value={cardName.value}
+              autoFocus
+              autoComplete="cc-name"
+              isValid={cardName.isDirty && cardName.isValid}
+              isInvalid={cardName.isTouched && !cardName.isValid}
+            />
+            {cardName.isTouched && !cardName.isValid && (
+              <Form.Control.Feedback type="invalid">
+                Card name must be at least 3 characters
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+        </Row>
       )}
 
       <Button
