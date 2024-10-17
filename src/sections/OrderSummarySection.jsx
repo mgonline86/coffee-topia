@@ -9,7 +9,7 @@ export default function OrderSummarySection({
   }
 
   return (
-    <Stack className="gap-3">
+    <Stack className="gap-3 position-sticky" style={{ top: "7.5rem" }}>
       {cartLineItems.map((item) => (
         <OrderSummaryItem key={item.product.id} item={item} />
       ))}
