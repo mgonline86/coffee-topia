@@ -1,5 +1,6 @@
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, InputGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,6 +28,8 @@ export default function LoginPage() {
     isDirty: false,
     errors: ["Required field"],
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isLogged) {
@@ -143,21 +146,30 @@ export default function LoginPage() {
 
         <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            required
-            onChange={validateForm}
-            value={password.value.trim().replaceAll(" ", "")}
-            autoComplete="new-password"
-            isValid={password.isDirty && password.isValid}
-            isInvalid={password.isTouched && !password.isValid}
-          />
-          {password.isTouched && !password.isValid && (
-            <Form.Control.Feedback type="invalid">
-              {password.errors.join(", ")}
-            </Form.Control.Feedback>
-          )}
+          <InputGroup hasValidation>
+            <Form.Control
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              required
+              onChange={validateForm}
+              value={password.value.trim().replaceAll(" ", "")}
+              autoComplete="new-password"
+              isValid={password.isDirty && password.isValid}
+              isInvalid={password.isTouched && !password.isValid}
+              style={{ borderRadius: "0.375rem 0 0 0.375rem" }}
+            />
+            <Button
+              variant="outline-primary"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </Button>
+            {password.isTouched && !password.isValid && (
+              <Form.Control.Feedback type="invalid">
+                {password.errors.join(", ")}
+              </Form.Control.Feedback>
+            )}
+          </InputGroup>
         </Form.Group>
 
         <Button

@@ -1,5 +1,6 @@
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, InputGroup, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Link, useNavigate } from "react-router-dom";
@@ -53,6 +54,9 @@ export default function RegisterPage() {
     isDirty: false,
     errors: ["Required field"],
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (isLogged) {
@@ -270,39 +274,59 @@ export default function RegisterPage() {
           </Form.Group>
           <Form.Group as={Col} className="mb-3" controlId="password">
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              required
-              onChange={validateForm}
-              value={password.value.trim().replaceAll(" ", "")}
-              autoComplete="new-password"
-              isValid={password.isDirty && password.isValid}
-              isInvalid={password.isTouched && !password.isValid}
-            />
-            {password.isTouched && !password.isValid && (
-              <Form.Control.Feedback type="invalid">
-                {password.errors.join(", ")}
-              </Form.Control.Feedback>
-            )}
+            <InputGroup hasValidation>
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                required
+                onChange={validateForm}
+                value={password.value.trim().replaceAll(" ", "")}
+                autoComplete="new-password"
+                isValid={password.isDirty && password.isValid}
+                isInvalid={password.isTouched && !password.isValid}
+                style={{ borderRadius: "0.375rem 0 0 0.375rem" }}
+              />
+              <Button
+                variant="outline-primary"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+              </Button>
+              {password.isTouched && !password.isValid && (
+                <Form.Control.Feedback type="invalid">
+                  {password.errors.join(", ")}
+                </Form.Control.Feedback>
+              )}
+            </InputGroup>
           </Form.Group>
           <Form.Group as={Col} className="mb-3" controlId="confirmPassword">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              required
-              onChange={validateForm}
-              value={confirmPassword.value.trim().replaceAll(" ", "")}
-              autoComplete="new-password"
-              isValid={confirmPassword.isDirty && confirmPassword.isValid}
-              isInvalid={confirmPassword.isTouched && !confirmPassword.isValid}
-            />
-            {confirmPassword.isTouched && !confirmPassword.isValid && (
-              <Form.Control.Feedback type="invalid">
-                {confirmPassword.errors.join(", ")}
-              </Form.Control.Feedback>
-            )}
+            <InputGroup hasValidation>
+              <Form.Control
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                required
+                onChange={validateForm}
+                value={confirmPassword.value.trim().replaceAll(" ", "")}
+                autoComplete="off"
+                isValid={confirmPassword.isDirty && confirmPassword.isValid}
+                isInvalid={
+                  confirmPassword.isTouched && !confirmPassword.isValid
+                }
+                style={{ borderRadius: "0.375rem 0 0 0.375rem" }}
+              />
+              <Button
+                variant="outline-primary"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+              </Button>
+              {confirmPassword.isTouched && !confirmPassword.isValid && (
+                <Form.Control.Feedback type="invalid">
+                  {confirmPassword.errors.join(", ")}
+                </Form.Control.Feedback>
+              )}
+            </InputGroup>
           </Form.Group>
         </Row>
         <div className="d-flex justify-content-center">
