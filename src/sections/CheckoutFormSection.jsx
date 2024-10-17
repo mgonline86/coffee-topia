@@ -149,8 +149,8 @@ export default function CheckoutFormSection({ closeSummary = null }) {
     if (user) {
       const oldOrders = [...user.orders];
 
-      // limit to 5 orders for preview purposes
-      if (oldOrders.length >= 5) {
+      // limit to 10 orders for preview purposes
+      if (oldOrders.length >= 10) {
         oldOrders.shift();
       }
 

@@ -108,16 +108,16 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
           }))}
           inputId="brands"
           styles={{
-            control: (styles) => ({
+            control: (styles, { isFocused }) => ({
               ...styles,
               backgroundColor: "white",
               borderColor: "var(--bs-primary)",
               "&:hover": {
                 borderColor: "var(--bs-primary)",
               },
-              boxShadow: "0 0 0 1px var(--bs-primary)",
+              boxShadow: isFocused ? "0 0 0 1px var(--bs-primary)" : "none",
             }),
-            option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+            option: (styles, { isDisabled, isFocused, isSelected }) => {
               return {
                 ...styles,
                 backgroundColor: isDisabled
@@ -154,14 +154,14 @@ export default function ProductsFilter({ closeOffcanvas = null }) {
           }))}
           inputId="tags"
           styles={{
-            control: (styles) => ({
+            control: (styles, { isFocused }) => ({
               ...styles,
               backgroundColor: "white",
               borderColor: "var(--bs-primary)",
               "&:hover": {
                 borderColor: "var(--bs-primary)",
               },
-              boxShadow: "0 0 0 1px var(--bs-primary)",
+              boxShadow: isFocused ? "0 0 0 1px var(--bs-primary)" : "none",
             }),
             option: (styles, { isDisabled, isFocused, isSelected }) => {
               return {
