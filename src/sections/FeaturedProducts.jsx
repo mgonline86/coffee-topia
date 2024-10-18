@@ -1,14 +1,20 @@
 import products from "../data/featuredProducts.json";
 import ProductCard from "../components/ProductCard";
 import { Col, Container, Row } from "react-bootstrap";
+import CoolTitle from "../components/CoolTitle";
 
 const FeaturedProducts = () => {
   return (
     <Container as="section" className="py-3 my-3 py-lg-5 my-lg-5">
-      <h1 className="text-center mb-4 fw-bolder fancyFont text-primary">Featured Products</h1>
+      <CoolTitle title="Featured Products" />
       <Row className="g-4">
         {products.map((product) => (
-          <Col xs={6} sm key={product.title} className="text-center px-2 px-lg-3">
+          <Col
+            xs={6}
+            sm
+            key={product.title}
+            className="text-center px-2 px-lg-3"
+          >
             <ProductCard product={product} />
           </Col>
         ))}
