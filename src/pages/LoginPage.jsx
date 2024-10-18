@@ -133,6 +133,7 @@ export default function LoginPage() {
             required
             onChange={validateForm}
             value={email.value}
+            autoFocus
             autoComplete="email"
             isValid={email.isDirty && email.isValid}
             isInvalid={email.isTouched && !email.isValid}
