@@ -16,6 +16,7 @@
 
 .productCardBtn {
   max-width: 10rem;
+  font-size: 0.9rem!important;
 }
 
 @media screen and (max-width: 576px) {
