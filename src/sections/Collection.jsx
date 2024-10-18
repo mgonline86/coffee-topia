@@ -2,6 +2,7 @@ import products from "../data/collection.json";
 import CollectionCard from "../components/CollectionCard";
 import { Col, Container, Row } from "react-bootstrap";
 import CoolTitle from "../components/CoolTitle";
+import SlideUpAnimation from "../components/SlideUpAnimation";
 
 const Collection = () => {
   return (
@@ -15,7 +16,9 @@ const Collection = () => {
             key={product.title}
             className="text-center px-2 px-lg-3"
           >
-            <CollectionCard product={product} />
+            <SlideUpAnimation>
+              <CollectionCard product={product} />
+            </SlideUpAnimation>
           </Col>
         ))}
       </Row>

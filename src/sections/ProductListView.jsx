@@ -1,6 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import useProductListContext from "../contexts/ProductListContext";
 import ProductCard from "../components/ProductCard";
+import SlideUpAnimation from "../components/SlideUpAnimation";
 
 export default function ProductListView() {
   const { viewProducts } = useProductListContext();
@@ -20,7 +21,9 @@ export default function ProductListView() {
       )}
       {viewProducts.map((product, index) => (
         <Col xs={6} sm key={product.id} className="px-2 px-lg-3">
-          <ProductCard product={product} index={index} />
+          <SlideUpAnimation>
+            <ProductCard product={product} index={index} />
+          </SlideUpAnimation>
         </Col>
       ))}
     </Row>

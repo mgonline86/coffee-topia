@@ -2,6 +2,7 @@ import products from "../data/featuredProducts.json";
 import ProductCard from "../components/ProductCard";
 import { Col, Container, Row } from "react-bootstrap";
 import CoolTitle from "../components/CoolTitle";
+import SlideUpAnimation from "../components/SlideUpAnimation";
 
 const FeaturedProducts = () => {
   return (
@@ -15,7 +16,9 @@ const FeaturedProducts = () => {
             key={product.title}
             className="text-center px-2 px-lg-3"
           >
-            <ProductCard product={product} />
+            <SlideUpAnimation>
+              <ProductCard product={product} />
+            </SlideUpAnimation>
           </Col>
         ))}
       </Row>
