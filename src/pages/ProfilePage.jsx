@@ -1,4 +1,5 @@
 import {
+  BanIcon,
   CheckCheckIcon,
   HourglassIcon,
   IdCard,
@@ -19,15 +20,46 @@ import useAuthContext from "../contexts/AuthContext";
 import styles from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
-  const { user } = useAuthContext();
+  const { user, updateUserOrderStatus } = useAuthContext();
   const navigate = useNavigate();
 
-  const orderStatus = (dateString) => {
-    const date = new Date(dateString);
-    const diffIs5Days = 5 * 24 * 60 * 60 * 1000;
-    if (date.getTime() < Date.now() - diffIs5Days) {
-      return (
-        <div className="d-flex">
+  useEffect(() => {
+    if (!user) {
+      navigate("/login", { replace: true });
+    }
+  });
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    user.orders.forEach((order) => {
+      const date = new Date(order.date);
+      const diffIs2Days = 2 * 24 * 60 * 60 * 1000;
+
+      if (date.getTime() < Date.now() - diffIs2Days) {
+        updateUserOrderStatus(order.id, "cancelled");
+      }
+    });
+  }, [user, updateUserOrderStatus]);
+
+  const orderStatus = (status) => {
+    switch (status) {
+      case "cancelled":
+        return (
+          <Badge
+            className="d-flex align-items-center justify-content-center"
+            bg="secondary"
+            text="dark"
+            pill
+          >
+            <BanIcon size={14} />
+            Cancelled
+          </Badge>
+        );
+      case "fulfilled":
+        return (
           <Badge
             className="d-flex align-items-center justify-content-center"
             bg="success"
@@ -36,29 +68,21 @@ export default function ProfilePage() {
             <CheckCheckIcon size={14} />
             Fullfilled
           </Badge>
-        </div>
-      );
+        );
+      default:
+        return (
+          <Badge
+            className="d-flex align-items-center justify-content-center"
+            bg="warning"
+            text="dark"
+            pill
+          >
+            <HourglassIcon size={14} />
+            Pending
+          </Badge>
+        );
     }
-    return (
-      <div className="d-flex">
-        <Badge
-          className="d-flex align-items-center justify-content-center"
-          bg="warning"
-          text="dark"
-          pill
-        >
-          <HourglassIcon size={14} />
-          Pending
-        </Badge>
-      </div>
-    );
   };
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login", { replace: true });
-    }
-  });
 
   if (!user) {
     return null;
@@ -122,7 +146,12 @@ export default function ProfilePage() {
             <h2 className="text-center">Your Orders</h2>
           </Col>
 
-          <Table responsive="md" size="sm" striped style={{verticalAlign: "middle"}}>
+          <Table
+            responsive="md"
+            size="sm"
+            striped
+            style={{ verticalAlign: "middle" }}
+          >
             <thead>
               <tr>
                 <th>ID</th>
@@ -135,7 +164,14 @@ export default function ProfilePage() {
             <tbody>
               {user?.orders.map((order) => {
                 return (
-                  <tr key={order.id}>
+                  <tr
+                    key={order.id}
+                    className={
+                      order.status === "cancelled"
+                        ? "text-decoration-line-through"
+                        : undefined
+                    }
+                  >
                     <td>{order.id}</td>
                     <td>{new Date(order.date).toLocaleDateString()}</td>
                     <td>
@@ -144,7 +180,9 @@ export default function ProfilePage() {
                         {order.total.toFixed(2)}
                       </div>
                     </td>
-                    <td>{orderStatus(order.date)}</td>
+                    <td>
+                      <div className="d-flex">{orderStatus(order.status)}</div>
+                    </td>
                     <td>
                       <OrderDetailsModal order={order} />
                     </td>

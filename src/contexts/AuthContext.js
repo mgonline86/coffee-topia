@@ -188,6 +188,18 @@ export const AuthProvider = ({ children }) => {
     }
   }, [user]);
 
+  const updateUserOrderStatus = (orderId, status) => {
+    const updatedUserOrders = user.orders.map((order) => {
+      if (order.id === orderId) {
+        return { ...order, status };
+      }
+      return order;
+    });
+
+    setUser({ ...user, orders: updatedUserOrders });
+    updateUserInUsers({ ...user, orders: updatedUserOrders });
+  };
+
   const value = {
     user,
     setUser,
@@ -202,6 +214,7 @@ export const AuthProvider = ({ children }) => {
     validatePassword,
     getUserByEmail,
     hashPassword,
+    updateUserOrderStatus,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
