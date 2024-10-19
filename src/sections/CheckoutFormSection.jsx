@@ -214,7 +214,7 @@ export default function CheckoutFormSection({ closeSummary = null }) {
         totalDiscount,
         shipping,
         total,
-        status: "pending",
+        status: Math.random() > 0.5 ? "fulfilled" : "pending",
       };
 
       const updatedOrders = [newOrder, ...oldOrders];

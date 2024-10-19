@@ -29,7 +29,7 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const cartLineItems = useMemo(() => Object.values(cart), [cart]);
+  const cartLineItems = useMemo(() => Object.values(cart).sort((a, b) => b.timestamp - a.timestamp), [cart]);
 
   const itemsCount = useMemo(
     () => cartLineItems.reduce((acc, { qty }) => acc + qty, 0),

@@ -19,7 +19,7 @@ export default function CoolTitle({ title }) {
             scale: 1,
             y: "-50%",
             x: "-50%",
-            transition: { delay: 0.2, duration: 0.2 },
+            transition: { delay: 0.25, duration: 0.2, ease: "easeInOut" },
           }}
           viewport={{ root: scrollRef, once: true }}
         />
@@ -29,7 +29,7 @@ export default function CoolTitle({ title }) {
           whileInView={{
             opacity: 1,
             y: 0,
-            transition: { duration: 0.2, delay: 0.2 },
+            transition: { duration: 0.2, delay: 0.2, ease: "easeInOut" },
           }}
           viewport={{ root: scrollRef, once: true }}
         >
@@ -44,7 +44,7 @@ export default function CoolTitle({ title }) {
             scale: 1,
             y: "-50%",
             x: "-50%",
-            transition: { delay: 0.2, duration: 0.2 },
+            transition: { delay: 0.25, duration: 0.2, ease: "easeInOut" },
           }}
           viewport={{ root: scrollRef, once: true }}
         />
