@@ -19,7 +19,7 @@ const dummyUsers = [
     name: "John Doe",
     address: "11 Main St, Cairo, Egypt",
     phone: "+20123456789",
-    image: "img/avatar-1.png",
+    image: "/img/avatar-1.png",
     orders: [],
   },
   {
@@ -30,13 +30,25 @@ const dummyUsers = [
     name: "Jane Smith",
     address: "12 Main St, Alexandria, Egypt",
     phone: "+20123456789",
-    image: "img/avatar-2.png",
+    image: "/img/avatar-2.png",
     orders: [],
   },
 ];
+
+const initialUsers = () => {
+  // if dummy users were added to local storage users previously, import local only
+  const localUsersIds = localUsers.map((user) => user.id);
+  const dummyUsersIds = dummyUsers.map((user) => user.id);
+  const hasDummyUsers = dummyUsersIds.every((id) => localUsersIds.includes(id));
+  if (localUsers.length > 0 && hasDummyUsers) {
+    return localUsers;
+  }
+  return [...dummyUsers, ...localUsers];
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(initialUser);
-  const [users, setUsers] = useState([...dummyUsers, ...localUsers]);
+  const [users, setUsers] = useState(initialUsers());
   const [isLogged, setIsLogged] = useState(
     JSON.stringify(initialUser) !== "{}" && initialUser !== null
   );

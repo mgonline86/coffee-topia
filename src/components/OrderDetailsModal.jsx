@@ -11,9 +11,11 @@ import useAuthContext from "../contexts/AuthContext";
 import OrderSummarySection from "../sections/OrderSummarySection";
 import styles from "./OrderDetailsModal.module.css";
 import ThankYouCard from "./ThankYouCard";
+import useToastContext from "../contexts/ToastContext";
 
 export default function OrderDetailsModal({ order }) {
   const { updateUserOrderStatus } = useAuthContext();
+  const { toast } = useToastContext();
 
   const {
     id,
@@ -36,6 +38,7 @@ export default function OrderDetailsModal({ order }) {
   const handleCancelOrder = () => {
     updateUserOrderStatus(id, "cancelled");
     setShowCancelAlert(false);
+    toast.success("Order cancelled successfully");
   };
 
   return (
@@ -46,7 +49,9 @@ export default function OrderDetailsModal({ order }) {
 
       <Modal show={show} onHide={handleClose} size="xl" fullscreen="xl-down">
         <Modal.Header closeButton>
-          <Modal.Title>{status.toUpperCase()} Order({id})</Modal.Title>
+          <Modal.Title>
+            {status.toUpperCase()} Order({id})
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {status === "pending" && (
