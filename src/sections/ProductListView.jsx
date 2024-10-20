@@ -1,7 +1,8 @@
-import { Col, Row } from "react-bootstrap";
-import useProductListContext from "../contexts/ProductListContext";
+import { Col, Image, Row } from "react-bootstrap";
+import CoolTitle from "../components/CoolTitle";
 import ProductCard from "../components/ProductCard";
 import SlideUpAnimation from "../components/SlideUpAnimation";
+import useProductListContext from "../contexts/ProductListContext";
 
 export default function ProductListView() {
   const { viewProducts } = useProductListContext();
@@ -9,14 +10,16 @@ export default function ProductListView() {
     <Row className="g-4">
       {viewProducts.length === 0 && (
         <Col className="text-center my-5">
-          <img
-            src="img/not-found.webp"
+          <Image
+            src="/img/not-found.webp"
             alt="not found"
-            className="img-fluid"
+            fluid
             width={130}
             height={110}
           />
-          <h2 className="mt-3 text-primary">No products found!</h2>
+          <div className="mt-3 text-primary">
+            <CoolTitle title="No products found!" />
+          </div>
         </Col>
       )}
       {viewProducts.map((product, index) => (

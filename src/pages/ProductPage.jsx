@@ -3,11 +3,13 @@ import { Col, Container, Image, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PageTitle from "../components/PageTitle";
 import useCartContext from "../contexts/CartContext";
 import ProductContext from "../contexts/ProductContext";
 import RelatedComponentsSection from "../sections/RelatedComponentsSection";
+import { ArrowLeftIcon } from "lucide-react";
+import CoolTitle from "../components/CoolTitle";
 
 export default function ProductPage() {
   const { slug } = useParams();
@@ -55,7 +57,22 @@ export default function ProductPage() {
   };
 
   if (!product) {
-    return <div>Product not found</div>;
+    return (
+      <div className="d-flex flex-column align-items-center gap-4 my-5">
+        <CoolTitle title="Product not found!" />
+        <Image
+          src="/img/not-found.webp"
+          alt="not found"
+          fluid
+          width={130}
+          height={110}
+        />
+        <Button variant="primary" as={Link} to="/products">
+          <ArrowLeftIcon className="me-2 point-left" />
+          Continue shopping
+        </Button>
+      </div>
+    );
   }
   return (
     <Container className="my-5">

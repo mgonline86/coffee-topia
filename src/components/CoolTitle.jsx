@@ -12,14 +12,13 @@ export default function CoolTitle({ title }) {
       <div className="position-relative flex-fill">
         <motion.img
           src="/img/front-splash.webp"
-          className="position-absolute h-100 z-3 img-fluid top-50 start-50"
-          initial={{ opacity: 0, scale: 0, y: "-50%", x: "-50%" }}
+          className="position-absolute z-3 mh-100 img-fluid bottom-0 start-50"
+          initial={{ opacity: 0, scale: 0, x: "-50%" }}
           whileInView={{
             opacity: 1,
             scale: 1,
-            y: "-50%",
-            x: "-50%",
             transition: { delay: 0.25, duration: 0.2, ease: "easeInOut" },
+            x: "-50%",
           }}
           viewport={{ root: scrollRef, once: true }}
         />
@@ -37,14 +36,13 @@ export default function CoolTitle({ title }) {
         </motion.h1>
         <motion.img
           src="/img/back-splash.webp"
-          className="position-absolute h-100 z-1 img-fluid top-50 start-50"
-          initial={{ opacity: 0, scale: 0, y: "-50%", x: "-50%" }}
+          className="position-absolute z-1 mh-100 img-fluid bottom-0 start-50"
+          initial={{ opacity: 0, scale: 0, x: "-50%" }}
           whileInView={{
             opacity: 1,
             scale: 1,
-            y: "-50%",
-            x: "-50%",
             transition: { delay: 0.25, duration: 0.2, ease: "easeInOut" },
+            x: "-50%",
           }}
           viewport={{ root: scrollRef, once: true }}
         />
