@@ -1,22 +1,22 @@
+import { ArrowLeftIcon } from "lucide-react";
 import { useContext, useMemo, useState } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Link, useParams } from "react-router-dom";
+import CoolTitle from "../components/CoolTitle";
 import PageTitle from "../components/PageTitle";
 import useCartContext from "../contexts/CartContext";
 import ProductContext from "../contexts/ProductContext";
 import RelatedComponentsSection from "../sections/RelatedComponentsSection";
-import { ArrowLeftIcon } from "lucide-react";
-import CoolTitle from "../components/CoolTitle";
 
 export default function ProductPage() {
   const { slug } = useParams();
   const { getProductBySlug, getRelatedProducts } = useContext(ProductContext);
   const product = getProductBySlug(slug);
 
-  const { updateCartQty, handleShowCart, maxQty } = useCartContext();
+  const { addToCart, handleShowCart, maxQty } = useCartContext();
 
   const relatedProducts = useMemo(() => {
     return getRelatedProducts(product);
@@ -52,7 +52,7 @@ export default function ProductPage() {
   // handle add to cart
   const handleAddToCart = (e) => {
     e.preventDefault();
-    updateCartQty(product, qty);
+    addToCart(product, qty);
     handleShowCart();
   };
 
@@ -98,11 +98,11 @@ export default function ProductPage() {
           <h1 className="text-primary fw-bolder">{product.title}</h1>
           <h3 className="fw-bold">EGP {product.price} </h3>
           <Row as={Form} onSubmit={handleAddToCart}>
-            <Col xs={12} md={4} className="mb-3 mb-md-0">
+            <Col xs={12} md={5} className="mb-3 mb-md-0">
               <InputGroup className="h-100">
                 <Button
-                  variant="outline-secondary"
-                  id="button-addon1"
+                  variant="outline-primary"
+                  id="decrement-btn"
                   onClick={decrementQty}
                   disabled={qty <= 1}
                 >
@@ -111,7 +111,7 @@ export default function ProductPage() {
                 <Form.Control
                   name="qty"
                   type="number"
-                  className="fs-5 text-center"
+                  className="fs-5 text-center border-primary border-start-0 border-end-0"
                   value={qty}
                   onChange={handleQuantityChange}
                   step={1}
@@ -119,8 +119,8 @@ export default function ProductPage() {
                   max={maxQty}
                 />
                 <Button
-                  variant="outline-secondary"
-                  id="button-addon1"
+                  variant="outline-primary"
+                  id="increment-btn"
                   onClick={incrementQty}
                   disabled={qty >= maxQty}
                 >
@@ -129,7 +129,7 @@ export default function ProductPage() {
               </InputGroup>
             </Col>
 
-            <Col xs={12} md={8}>
+            <Col xs={12} md={7}>
               <Button
                 variant="primary"
                 size="lg"
