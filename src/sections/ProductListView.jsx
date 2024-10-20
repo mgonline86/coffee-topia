@@ -10,7 +10,7 @@ export default function ProductListView() {
       {viewProducts.length === 0 && (
         <Col className="text-center my-5">
           <img
-            src="img/not-found.webp"
+            src="/img/not-found.webp"
             alt="not found"
             className="img-fluid"
             width={130}

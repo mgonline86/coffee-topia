@@ -3,7 +3,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
 import styles from "./HeroSection.module.css";
 
-const imagesPath = "img/carousel/";
+const imagesPath = "/img/carousel/";
 const imgExt = ".webp";
 
 const images = [
