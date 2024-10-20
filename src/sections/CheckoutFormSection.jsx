@@ -9,7 +9,7 @@ import useCartContext from "../contexts/CartContext";
 import ThankYouSection from "./ThankYouSection";
 
 export default function CheckoutFormSection({ closeSummary = null }) {
-  const { user, setUser, updateUserInUsers, updateUserOrderStatus } =
+  const { user, setUser, updateUserInUsers } =
     useAuthContext();
   const { subTotal, totalDiscount, shipping, total, cartLineItems } =
     useCartContext();
@@ -224,11 +224,6 @@ export default function CheckoutFormSection({ closeSummary = null }) {
       });
 
       updateUserInUsers({ ...user, orders: updatedOrders });
-
-      setTimeout(
-        () => updateUserOrderStatus(newOrder.id, "fulfilled"),
-        10 * 1000
-      );
     }
 
     setShowThankYou(true);
