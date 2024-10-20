@@ -39,7 +39,7 @@ export default function CartOffcanvas() {
         </Badge>
         <ShoppingCartIcon />
       </Button>
-      <Offcanvas show={showCart} onHide={handleCloseCart} placement="end">
+      <Offcanvas show={showCart} onHide={handleCloseCart} placement="end" style={{ maxWidth: "90%" }}>
         <Offcanvas.Header closeButton className="shadow-sm">
           <Offcanvas.Title>Your Cart</Offcanvas.Title>
         </Offcanvas.Header>

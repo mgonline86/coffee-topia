@@ -20,7 +20,7 @@ import useAuthContext from "../contexts/AuthContext";
 import styles from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
-  const { user, updateUserOrderStatus } = useAuthContext();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,20 +29,9 @@ export default function ProfilePage() {
     }
   });
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    user.orders.forEach((order) => {
-      const date = new Date(order.date);
-      const diffIs2Days = 2 * 24 * 60 * 60 * 1000;
-
-      if (date.getTime() < Date.now() - diffIs2Days) {
-        updateUserOrderStatus(order.id, "cancelled");
-      }
-    });
-  }, [user, updateUserOrderStatus]);
+  if (!user) {
+    return null;
+  }
 
   const orderStatus = (status) => {
     switch (status) {

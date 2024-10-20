@@ -29,7 +29,10 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const cartLineItems = useMemo(() => Object.values(cart).sort((a, b) => b.timestamp - a.timestamp), [cart]);
+  const cartLineItems = useMemo(
+    () => Object.values(cart).sort((a, b) => b.timestamp - a.timestamp),
+    [cart]
+  );
 
   const itemsCount = useMemo(
     () => cartLineItems.reduce((acc, { qty }) => acc + qty, 0),
@@ -43,6 +46,21 @@ export const CartProvider = ({ children }) => {
     [cart]
   );
 
+  const addToCart = (product, qty = 1) => {
+    if (qty < 1) {
+      return;
+    }
+    const strId = String(product.id);
+    const oldQty = currentQty(strId);
+    let newQty = oldQty + qty;
+    if (newQty > maxQty) {
+      newQty = maxQty;
+      toast.info(`Max quantity is ${maxQty} per product`);
+    }
+
+    updateCartQty(product, newQty);
+  };
+
   const removeFromCart = (id) => {
     const strId = String(id);
     if (cart[strId]) {
@@ -53,7 +71,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const updateCartQty = (product, qty=1) => {
+  const updateCartQty = (product, qty = 1) => {
     // if qty is less than 1 exit
     const strId = String(product.id);
     if (qty < 1) {
@@ -61,8 +79,7 @@ export const CartProvider = ({ children }) => {
     }
 
     // if max qty reached
-    const oldQty = currentQty(strId);
-    if (qty + oldQty > maxQty) {
+    if (qty > maxQty) {
       qty = maxQty;
       toast.info(`Max quantity is ${maxQty} per product`);
     }
@@ -100,8 +117,9 @@ export const CartProvider = ({ children }) => {
     cart,
     setCart,
     cartLineItems,
-    updateCartQty,
+    addToCart,
     removeFromCart,
+    updateCartQty,
     showCart,
     handleCloseCart,
     handleShowCart,

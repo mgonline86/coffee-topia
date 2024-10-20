@@ -66,9 +66,9 @@ export default function CartTableRow({
       <Col
         xs={12}
         lg={compactView ? undefined : 5}
-        className={`my-2 ${
-          compactView ? "border-end-0" : styles.borderEnd
-        }${compactView ? "" : " my-lg-0"}`}
+        className={`my-2 ${compactView ? "border-end-0" : styles.borderEnd}${
+          compactView ? "" : " my-lg-0"
+        }`}
       >
         <Link
           to={`/products/${slug}`}
@@ -122,7 +122,7 @@ export default function CartTableRow({
           className={`${compactView ? undefined : "  justify-content-lg-end"}`}
         >
           <Button
-            variant="outline-secondary"
+            variant="outline-primary"
             onClick={() => updateCartQty(product, qty - 1)}
             disabled={qty < 2}
           >
@@ -135,11 +135,11 @@ export default function CartTableRow({
             min={1}
             max={maxQty}
             onBlur={(e) => validateQty(e)}
-            className={`text-center ${styles.qtyInput}`}
+            className={`text-center border-primary border-start-0 border-end-0 ${styles.qtyInput}`}
             name="qty"
           />
           <Button
-            variant="outline-secondary"
+            variant="outline-primary"
             onClick={() => updateCartQty(product, qty + 1)}
             disabled={qty > 98}
           >
